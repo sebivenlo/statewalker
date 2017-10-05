@@ -1,5 +1,7 @@
 package nl.fontys.sebivenlo.statewalker;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -35,7 +37,12 @@ public class ContextBaseTest {
 
     Device dev2 = new Device() {
     };
-    
+
+    public ContextBaseTest() {
+        // to test the logger level fine branches.
+        Logger.getLogger( ContextBase.class.getName() ).setLevel( Level.FINE );
+    }
+
     @SuppressWarnings( "unchecked" )
     ContextBase cb = new ContextBase( sb.getClass() ) {
         @Override

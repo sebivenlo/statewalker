@@ -18,8 +18,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     private final StateStack<S> stack = new StateStack<>( 6 );
     private final S nullState;
     private boolean debug = false;
-    private static final Logger LOGGER = Logger.getLogger( ContextBase.class.
-            getName() );
+    private static final Logger LOGGER = Logger.getLogger( ContextBase.class.getName() );
     private final List<List<S>> deepHistoryMap;
 
     /**
@@ -180,8 +179,8 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      * sub-states. For the start state the leave method is invoked, for each
      * state in endState the enter state is invoked.
      *
-     * @param event name for the transition
-     * @param start state to leave
+     * @param event    name for the transition
+     * @param start    state to leave
      * @param endState states to enter in order given.
      */
     @SafeVarargs
@@ -202,8 +201,8 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      * Do a transition with out leaving this state. The sub states of state are
      * left, then the endStates are entered in the order given.
      *
-     * @param event name for the transition
-     * @param start state that is NOT left
+     * @param event    name for the transition
+     * @param start    state that is NOT left
      * @param endState new inner state.
      */
     @SafeVarargs

@@ -1,5 +1,6 @@
 package nl.fontys.sebivenlo.statewalkertest;
 
+import nl.fontys.sebivenlo.statewalker.ContextBase;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,6 +20,7 @@ public class ContextBaseTest {
     @Before
     public void setup() {
         ctx = new Context( S.class ).initialize().setDebug( true );
+        
     }
 
     @After
