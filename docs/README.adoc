@@ -1,1 +1,5 @@
 = Here the docs will be.
+
+Pieter van den Hombergh (homberghp) <pieter.van.den.hombergh@gmail.com>
+Version 1.0
+
