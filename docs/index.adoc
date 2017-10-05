@@ -1,28 +1,28 @@
 = SeBi Venlo State Walker
 
-Pieter van den Hombergh (homberghp) <pieter.van.den.hombergh@gmail.com>
+Pieter van den Hombergh (homberghp) <p.vandenhombergh@fontys.nl>
 Version 1.0
 
-# StateWalker will simplify the coding of your (complex) state machines.
+:sourcedir: src
+:source-highlighter: coderay
+:coderay-linenums-mode: inline
+:icons: font
+:numbered!:
+
+== StateWalker will simplify the coding of your (complex) state machines.
+
 
 Just add a Java 8 interface with default methods for all methods or events you states should accept. Have an enum implement this interface and give it at least  a `NULL` value.
 
+.MyState template
+[[Mock-setup]]
+[source,java]
+----
+include::{sourcedir}/MyState.java[]
+----
 
-```Java
-class State extends StateBase {
-	
-}
-```
+For an example see the maven project statewalkertest in the repository, which implements the state bahavior in the <<StateDiagram>> below:
 
-```Java
-enum MyStates extends State {
-     NULL,
-     S1{
-     ...
-     },
-     S2{
-     ...
-     },
-     ;
-}
-```
+.Test state machine
+[[StateMachine]]
+image:images/statewalkertest.svg[State Walker test state machine].
