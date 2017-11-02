@@ -25,10 +25,83 @@ Version 1.0</p>
 <h2 id="_statewalker_will_simplify_the_coding_of_your_complex_state_machines"><a class="link" href="#_statewalker_will_simplify_the_coding_of_your_complex_state_machines">StateWalker will simplify the coding of your (complex) state machines.</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Just add a Java 8 interface with default methods for all methods or events you states should accept. Have an enum implement this interface and give it at least  a <code>NULL</code> value.</p>
+<p>Statewalker implements a hierarchical state pattern variant by using a stack of states.
+The child-most state is on top, it super state (if any) below it and so on.
+To change a state the code</p>
+</div>
+<div class="sect2">
+<h3 id="_apply_it_to_your_project"><a class="link" href="#_apply_it_to_your_project">Apply it to your project:</a></h3>
+<div class="paragraph">
+<p>To make it work in your project, you have to some work yourselves.
+. Implement a Context that extends BaseContext like this
+. Extend a State interface with default method handlers for ALL events (methods) relevant to your state machine.
+. Have a StateEnum implement this State interface. Since the interface has default methods only, a state only has to overwrite
+any method that is relevant to this state.
+. You will also need a <em>Device</em> that can be asked from the context and can be manipulated (as in: call methods on it) in the states.
+What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor.
+=== The Context</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Context</span> <span class="directive">extends</span> ContextBase&lt;<span class="predefined-type">Context</span>, Dev, State&gt; {
+
+  <span class="directive">public</span> <span class="predefined-type">Context</span>( <span class="predefined-type">Class</span>&lt;?&gt; stateClass ) {
+          <span class="local-variable">super</span>( stateClass );
+  }
+
+  <span class="type">void</span> e2() {
+        getTopState().e2( <span class="local-variable">this</span> );
+  } <span class="comment">//etc</span>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_state_interface"><a class="link" href="#_state_interface">State interface</a></h3>
+<div class="listingblock">
+<div class="title">statewalkertest State interface</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">nl.fontys.sebivenlo.statewalkertest</span>;
+
+<span class="keyword">import</span> <span class="include">nl.fontys.sebivenlo.statewalker.StateBase</span>;
+
+<span class="comment">/**
+ *
+ * @author Pieter van den Hombergh {@code &lt;p.vandenhombergh@fontys.nl&gt;}
+ */</span>
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">State</span> <span class="directive">extends</span> StateBase&lt;<span class="predefined-type">Context</span>, Dev, State&gt; {
+    <span class="comment">// &lt;editor-fold formatter-rule=&quot;keep-off&quot;&gt;</span>
+    <span class="keyword">default</span> <span class="type">void</span>  e1( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e1( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e2( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e2( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e3( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e3( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e4( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e4( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e5( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e5( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e6( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e6( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e7( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e7( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e8( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e8( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e9( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e9( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span> e10( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e10( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span> e11( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e11( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span> e12( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e12( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span> e13( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e13( ctx ); }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">default</span> <span class="type">void</span> exit( <span class="predefined-type">Context</span> ctx ) {}
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">default</span> <span class="type">void</span> enter( <span class="predefined-type">Context</span> ctx ) {}
+    <span class="comment">// &lt;/editor-fold&gt;</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see all but the pseudo events reach the event down to the next state on the state stack.</p>
+</div>
+<div class="paragraph">
+<p>Then have an enum implement this interface and give it at least  a <code>NULL</code> value.</p>
 </div>
 <div id="Mock-setup" class="listingblock">
-<div class="title">MyState template</div>
+<div class="title">MyState enum template</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="type">enum</span> MyStates <span class="directive">extends</span> State {
     S1{
@@ -45,6 +118,12 @@ Version 1.0</p>
 }</code></pre>
 </div>
 </div>
+<div class="listingblock">
+<div class="title">the device class header</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Dev</span> <span class="directive">implements</span> Device&lt;<span class="predefined-type">Context</span>, Dev, State&gt; {</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>For an example see the maven project statewalkertest in the repository, which implements the state bahavior in the <a href="#StateDiagram">[StateDiagram]</a> below:</p>
 </div>
@@ -59,9 +138,10 @@ The maven generated site can be found at <a href="https://javabits.fontysvenlo.o
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-02 16:26:26 CET
+Last updated 2017-11-02 16:56:05 CET
 </div>
 </div>
 </body>
