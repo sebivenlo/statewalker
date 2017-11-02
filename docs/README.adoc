@@ -26,3 +26,5 @@ For an example see the maven project statewalkertest in the repository, which im
 .Test state machine
 [[StateMachine]]
 image:images/statewalkertest.svg[State Walker test state machine].
+
+The Java statewalker API doc is also available at link:paidocs/index.html[API Docs].
