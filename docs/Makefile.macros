@@ -1,0 +1,3 @@
+
+%.html: %.adoc 
+	asciidoctor -n $<

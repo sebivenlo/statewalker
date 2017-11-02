@@ -1,10 +1,14 @@
 enum MyStates extends State {
-    NULL,
     S1{
 	...
     },
     S2{
 	...
     };
+    NULL{// handlers for all events with empty bodies
+	void e1(Context ctx){}
+	...
+
+    },
 }
 

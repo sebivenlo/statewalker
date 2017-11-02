@@ -3,10 +3,15 @@
 Pieter van den Hombergh (homberghp) <p.vandenhombergh@fontys.nl>
 Version 1.0
 
+:stylesdir: css/
+:stylesheet: asciidoctor.css
+:linkcss:
+:sectlinks: true
+:toc: left
+:icons: font
 :sourcedir: src
 :source-highlighter: coderay
 :coderay-linenums-mode: inline
-:icons: font
 :numbered!:
 
 == StateWalker will simplify the coding of your (complex) state machines.
