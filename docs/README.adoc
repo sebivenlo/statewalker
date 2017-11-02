@@ -32,4 +32,5 @@ For an example see the maven project statewalkertest in the repository, which im
 [[StateMachine]]
 image:images/statewalkertest.svg[State Walker test state machine].
 
-The Java statewalker API doc is also available at link:apidocs/index.html[API Docs].
+The Java statewalker API doc is also available at link:https://javabits.fontysvenlo.org/statewalker/apidocs/index.html[API Docs].
+The maven generated site can be found at https://javabits.fontysvenlo.org/statewalker/[StateWalker Maven site].
