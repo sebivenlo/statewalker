@@ -15,14 +15,14 @@
  *
  * <p>In the example, app, the declarations of AppContext, AppDevice, and AppState
  * could then be as follows:</p>
- * <pre>
- * {@code
- * class AppContext extends ContextBase<AppContext, AppDevice, State>
- * class AppDevice implements Device<AppContext, AppDevice, State>
- * interface State extends StateBase<AppContext, AppDevice, State>
- * enum AppState implements State
+ * <pre class="brush:java">
+ * 
+ * class AppContext extends ContextBase&lt;AppContext, AppDevice, State&gt; {
+ * class AppDevice implements Device&lt;AppContext, AppDevice, State&gt; {
+ * interface State extends StateBase&lt;AppContext, AppDevice, State&gt; {
+ * enum AppState implements State {
  *
- * }
+ * 
  * </pre>
  *
  *
@@ -63,44 +63,38 @@
  * <h3>simple transition</h3>
  * <img src='doc-files/_1.svg'  alt='simple transistion' >
  *
- * <pre>
- * <code>
+ * <pre class='brush:java'>
  *   A {
  *     {@literal @}Override
  *      public void e( Context ctx ) {
  *          ctx.changeFromToState( "e", this, B );
  *      }
  *   }
- * </code>
  * </pre>
  *
  * <h3>Transition to sub-state</h3>
  * <img src='doc-files/_2.svg'  alt='simple transistion' >
  * <br>
  * Note how the target states are passed in super-sub order.
- * <pre>
- * <code>
+ * <pre class='brush:java'>
  *   A {
  *     {@literal @}Override
  *      public void e( Context ctx ) {
  *          ctx.changeFromToState( "e", this, B1, B2 );
  *      }
  *   }
- * </code>
  * </pre>
  *
  * <h3>Transition from sub-state</h3>
  * <img src='doc-files/_3a.svg'  alt='simple transistion' ><br>
  * Note that the super state (A1) of A2 is mentioned in the transition call, not <b>this</b>.
- * <pre>
- * <code>
+ * <pre class='brush:java'>
  *   A2 {
  *     {@literal @}Override
  *      public void e( Context ctx ) {
  *          ctx.changeFromToState( "e", A1, B );
  *      }
  *   }
- * </code>
  * </pre>
  *
  * <h3>Transition from super-state</h3>
@@ -108,30 +102,30 @@
  * Note that this transition is implemented in super state A1, so <b>this</b> is applicable here as
  * it refers to that super state.
  * call.
- * <pre>
- * <code>
+ * <pre class='brush:java'>
+ * 
  *   A1 {
  *     {@literal @}Override
  *      public void e( Context ctx ) {
  *          ctx.changeFromToState( "e", this, B );
  *      }
  *   }
- * </code>
+ * 
  * </pre>
  *
  * <h3>Transition to sub-state implemented in super state</h3>
  * <img src='doc-files/_5.svg'  alt='simple transistion' ><br>
  * Note the use of the innerTranstion call, which only affects sub-states.
  *
- * <pre>
- * <code>
+ * <pre class='brush:java'>
+ * 
  *   B1 {
  *      {@literal @}Override
- * public void e( Context ctx ) {
- * ctx.innerTransition( "e", this, B22 );
+ *      public void e( Context ctx ) {
+ *          ctx.innerTransition( "e", this, B22 );
+ *      }
  * }
- * }
- * </code>
+ * 
  * </pre>
  *
  * <h3>Transition to sub-state implemented in super state</h3>
@@ -143,42 +137,34 @@
  * {@code getInitialState()} method in every state. The map used is an enum-map
  * which has O(1) lookup properties, like an array access.
  *
- * <pre>
- * <code>
- *   A1 {
- *     {@literal @}Override
- * public void e( Context ctx ) {
- * ctx.changeFromToState( "e", this, B1 );
- * }
- * }
+ * <pre class='brush:java' >
  *
  * private static final EnumMap{@literal <S, S>} initialMap = new EnumMap{@literal <>}( S.class );
  *
  * static {
- * initialMap.put( NULL, SI );
- * initialMap.put( B1, B2 );
+ *     initialMap.put( NULL, SI );
+ *     initialMap.put( B1, B2 );
  * }
  *
- * {@literal @}Override
+ * &#64;Override
  * public State getInitialState() {
- * return initialMap.get( this );
+ *     return initialMap.get( this );
  * }
- * </code>
  * </pre>
  *
  * <h3>Shallow and Deep History</h3>
  * Deep and shallow history are implemented with sets and two methods
  * that do a lookup in these sets. Both sets (different names of course) are implemented as
  * follows:
- * <pre>
- * <code>
+ * <pre class='brush:java'>
+ * 
  *  private static final EnumSet{@literal <S>} isHist = EnumSet.{@literal <S>}of( B1 );
  *  // with lookup
- *   {@literal @}Override
+ *   &#64;Override
  *    public boolean isInitialStateHistory() {
  *        return isHist.contains( this );
  *    }
- * </code>
+ * 
  * </pre>
  *
  * With this mapping (and lookup by the ContextBase) the state implementation is
