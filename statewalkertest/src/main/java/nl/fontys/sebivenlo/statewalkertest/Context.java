@@ -8,8 +8,9 @@ import nl.fontys.sebivenlo.statewalker.ContextBase;
  */
 public class Context extends ContextBase<Context, Dev, State> {
 
-    public Context( Class<?> stateClass ) {
+    public Context( Class<?> stateClass, Dev d ) {
         super( stateClass );
+        this.device = d;
     }
 
     void e1() {
@@ -62,13 +63,6 @@ public class Context extends ContextBase<Context, Dev, State> {
 
     void e13() {
         getTopState().e13( this );
-    }
-
-    static Dev dev = new Dev();
-
-    @Override
-    public Dev getDevice() {
-        return dev;
     }
 
 }

@@ -1,4 +1,3 @@
-
 package nl.fontys.sebivenlo.statewalkertest;
 
 import org.junit.Test;
@@ -6,18 +5,22 @@ import static org.junit.Assert.*;
 
 /**
  * For coverage. Some methods are never called in the transition tests.
+ *
  * @author Pieter van den Hombergh {@code <p.vandenhombergh@fontys.nl>}
  */
 public class StateTest {
-    
+
+    Dev d;
+
     public StateTest() {
+        d = new Dev();
     }
 
     @Test
     public void testDefaultMethods() {
         State x = StateEnum.A;
-        Context ctx = new Context(StateEnum.class).initialize();
-        ctx.addState( x);
+        Context ctx = new Context( StateEnum.class, d ).initialize();
+        ctx.addState( x );
         x.e1( ctx );
         x.e2( ctx );
         x.e3( ctx );
@@ -34,5 +37,5 @@ public class StateTest {
         x.enter( ctx );
         x.exit( ctx );
     }
-    
+
 }

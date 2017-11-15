@@ -26,7 +26,7 @@ public class StateBaseTest {
 
     static class TestContext extends ContextBase<TestContext, Dev, S> {
 
-        public TestContext( Class stateClass ) {
+        public TestContext( Class<?> stateClass ) {
             super( stateClass );
         }
 

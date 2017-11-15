@@ -7,18 +7,26 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import static nl.fontys.sebivenlo.statewalkertest.S.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import org.mockito.Spy;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  *
  * @author Pieter van den Hombergh {@code <p.vandenhombergh@fontys.nl>}
  */
+@RunWith(MockitoJUnitRunner.class)
 public class ContextBaseTest {
 
     Context ctx;
-
+    @Spy
+    Dev dev =  new Dev();
     @Before
     public void setup() {
-        ctx = new Context( S.class ).initialize().setDebug( true );
+        ctx = new Context( S.class, dev ).initialize().setDebug( true );
     }
 
     @After
@@ -154,10 +162,13 @@ public class ContextBaseTest {
 
         ctx.e10();
         assertEquals("S3.S33.S331",ctx.logicalState());
+        verify(dev,times(1)).heater( true );
         ctx.e11();
         assertEquals("S3.S33.S332",ctx.logicalState());
         ctx.e12();
         assertEquals("S1.S11",ctx.logicalState());
+        verify(dev,times(1)).heater( false);
+        
         ctx.e9();
         assertEquals("S3.S33.S332",ctx.logicalState());
         ctx.e10();

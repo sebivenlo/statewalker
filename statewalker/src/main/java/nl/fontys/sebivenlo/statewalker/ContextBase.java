@@ -18,8 +18,10 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     private final StateStack<S> stack = new StateStack<>( 6 );
     private final S nullState;
     private boolean debug = false;
-    private static final Logger LOGGER = Logger.getLogger( ContextBase.class.getName() );
+    private static final Logger LOGGER = Logger.getLogger( ContextBase.class.
+            getName() );
     private final List<List<S>> deepHistoryMap;
+    protected D device;
 
     /**
      * Create a context for a state machine with states of type stateClass.
@@ -51,6 +53,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      *
      * @return this context
      */
+    @SuppressWarnings( "unchecked" )
     public C initialize() {
         if ( null != nullState ) {
             this.stack.push( nullState );
@@ -161,7 +164,9 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      *
      * @return the device
      */
-    public abstract D getDevice();
+    public D getDevice() {
+        return device;
+    }
 
     /**
      * Get the super state of a state.
@@ -264,7 +269,9 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
 
     /**
      * Set the debug flag for more debugging output.
+     *
      * @param d flag value
+     *
      * @return this context.
      */
     @SuppressWarnings( "unchecked" )

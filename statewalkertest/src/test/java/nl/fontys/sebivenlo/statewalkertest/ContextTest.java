@@ -14,7 +14,7 @@ public class ContextTest {
 
     @Test
     public void testGetDevice() {
-        Context ctx= new Context(S.class);
+        Context ctx= new Context(S.class, new Dev());
         assertNotNull( "has device", ctx.getDevice());
     }
     
