@@ -28,7 +28,7 @@ To make it work in your project, you have to some work yourselves.
 . Have a StateEnum implement this State interface. Since the interface has default methods only, a state only has to overwrite
 any method that is relevant to this state.
 . You will also need a _Device_ that can be asked from the context and can be manipulated (as in: call methods on it) in the states.
-What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor. 
+What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor.
 === The Context
 [source,java]
 ----
@@ -61,7 +61,11 @@ Then have an enum implement this interface and give it at least  a `NULL` value.
 ----
 include::{sourcedir}/MyState.java[]
 ----
+Examples:
 
+<1> Turns the heater on on entry.
+<2> Turns the heater off on exit.
+<3> Changes state to S31, implicitly leaving this state which should automagically call exit on `this` state, which is `S33` and thus turns off the heater.
 .the device class header
 [source,java]
 ----

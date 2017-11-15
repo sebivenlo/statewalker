@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>SeBi Venlo State Walker</title>
 <link rel="stylesheet" href="css/asciidoctor.css">
 </head>
@@ -109,19 +109,55 @@ What the 'device' is and what it can do is up to you. For a coffee machine it wo
     },
     S2{
         ...
-    };
+    },
+    S33{
+
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> enter(<span class="predefined-type">Context</span> ctx) {
+            ctx.getDevice().heater(<span class="predefined-constant">true</span>); <i class="conum" data-value="1"></i><b>(1)</b>
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> exit(<span class="predefined-type">Context</span> ctx) {
+            ctx.getDevice().heater(<span class="predefined-constant">false</span>); <i class="conum" data-value="2"></i><b>(2)</b>
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> e10(<span class="predefined-type">Context</span> ctx) {
+            ctx.changeFromToState(<span class="string"><span class="delimiter">&quot;</span><span class="content">e10</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>, S31);<i class="conum" data-value="3"></i><b>(3)</b>
+        }
+    }
     NULL{<span class="comment">// handlers for all events with empty bodies</span>
         <span class="type">void</span> e1(<span class="predefined-type">Context</span> ctx){}
         ...
 
-    },
+            };
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Turns the heater on on entry.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Turns the heater off on exit.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Changes state to S31, implicitly leaving this state which should automagically call exit on <code>this</code> state, which is <code>S33</code> and thus turns off the heater.
+.the device class header</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
-<div class="title">the device class header</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Dev</span> <span class="directive">implements</span> Device&lt;<span class="predefined-type">Context</span>, Dev, State&gt; {</code></pre>
+<pre>public class Dev implements Device&lt;Context, Dev, State&gt; {</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -141,7 +177,7 @@ The maven generated site can be found at <a href="https://javabits.fontysvenlo.o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-02 16:56:05 CET
+Last updated 2017-11-15 12:09:40 CET
 </div>
 </div>
 </body>
