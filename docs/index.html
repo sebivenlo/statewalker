@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>SeBi Venlo State Walker</title>
 <link rel="stylesheet" href="css/asciidoctor.css">
 </head>
@@ -136,7 +136,7 @@ What the 'device' is and what it can do is up to you. For a coffee machine it wo
 </div>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Explanation:</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -150,14 +150,14 @@ What the 'device' is and what it can do is up to you. For a coffee machine it wo
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Changes state to S31, implicitly leaving this state which should automagically call exit on <code>this</code> state, which is <code>S33</code> and thus turns off the heater.
-.the device class header</td>
+<td>Changes state to S31, implicitly leaving this state which should automagically call exit on <code>this</code> state, which is <code>S33</code> and thus turns off the heater.</td>
 </tr>
 </table>
 </div>
 <div class="listingblock">
+<div class="title">the device class header</div>
 <div class="content">
-<pre>public class Dev implements Device&lt;Context, Dev, State&gt; {</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Dev</span> <span class="directive">implements</span> Device&lt;<span class="predefined-type">Context</span>, Dev, State&gt; {</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -177,7 +177,7 @@ The maven generated site can be found at <a href="https://javabits.fontysvenlo.o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-15 12:09:40 CET
+Last updated 2017-11-16 20:05:22 CET
 </div>
 </div>
 </body>
