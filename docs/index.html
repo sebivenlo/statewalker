@@ -27,7 +27,10 @@ Version 1.0</p>
 <div class="paragraph">
 <p>Statewalker implements a hierarchical state pattern variant by using a stack of states.
 The child-most state is on top, it super state (if any) below it and so on.
-To change a state the code</p>
+To change a state the code typically uses one method: <code>changeFromeToState(String message, State from, State&#8230;&#8203; to)</code>.</p>
+</div>
+<div class="paragraph">
+<p>The source code and the separate statewalkertest project can be found on github at the url <a href="https://github.com/sebivenlo/statewalker">https://github.com/sebivenlo/statewalker</a>.</p>
 </div>
 <div class="sect2">
 <h3 id="_apply_it_to_your_project"><a class="link" href="#_apply_it_to_your_project">Apply it to your project:</a></h3>
@@ -177,7 +180,7 @@ The maven generated site can be found at <a href="https://javabits.fontysvenlo.o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-16 20:05:22 CET
+Last updated 2017-12-01 09:05:11 CET
 </div>
 </div>
 </body>
