@@ -127,7 +127,8 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     public final void leaveSubStates( S state ) {
         if ( !stack.has( state ) ) {
             throw new IllegalArgumentException( "Cannot leave state '" + state
-                    + "'because it is not active" );
+                    + "' because it is not active\n"
+                            + " current state is "+logicalState() );
         }
         S topState = stack.peek();
         while ( topState != state ) {

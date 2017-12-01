@@ -18,7 +18,9 @@ Version 1.0
 
 Statewalker implements a hierarchical state pattern variant by using a stack of states.
 The child-most state is on top, it super state (if any) below it and so on.
-To change a state the code
+To change a state the code typically uses one method: `changeFromeToState(String message, State from, State... to)`.
+
+The source code and the separate statewalkertest project can be found on github at the url https://github.com/sebivenlo/statewalker[https://github.com/sebivenlo/statewalker].
 
 === Apply it to your project:
 
