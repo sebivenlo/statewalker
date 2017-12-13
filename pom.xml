@@ -201,6 +201,19 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
             </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.2.5</version>
+                <configuration>
+                    <targetClasses>
+                        <param>nl.fontys.sebivenlo.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>nl.fontys.sebivenlo.*</param>
+                    </targetTests>
+                </configuration>
+            </plugin>
         </plugins>
         <extensions>
             <!-- Enabling the use of SSH -->

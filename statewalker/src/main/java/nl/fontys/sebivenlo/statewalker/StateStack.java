@@ -19,16 +19,16 @@ class StateStack<E> implements Stack<E> {
      *
      * @param cap the initial capacity.
      */
-    @SuppressWarnings( "unchecked" )
-    StateStack( int cap ) {
-        this.storage = ( E[] ) new Object[ cap ];
+    @SuppressWarnings("unchecked")
+    StateStack(int cap) {
+        this.storage = (E[]) new Object[cap];
     }
 
     /**
      * Default constructor producing stack of default capacity.
      */
     StateStack() {
-        this( DEFAULT_CAPACITY );
+        this(DEFAULT_CAPACITY);
     }
 
     @Override
@@ -37,9 +37,9 @@ class StateStack<E> implements Stack<E> {
     }
 
     @Override
-    public void push( E e ) {
+    public void push(E e) {
         ensureCapacity();
-        storage[ ++top ] = e;
+        storage[++top] = e;
     }
 
     /**
@@ -52,7 +52,7 @@ class StateStack<E> implements Stack<E> {
     @Override
     public E pop() {
         E result = peek();
-        storage[ top-- ] = null;
+        storage[top--] = null;
         return result;
 
     }
@@ -65,7 +65,7 @@ class StateStack<E> implements Stack<E> {
      */
     @Override
     public E peek() {
-        return storage[ top ];
+        return storage[top];
     }
 
     /**
@@ -73,36 +73,47 @@ class StateStack<E> implements Stack<E> {
      *
      * @param level to peek below top.
      */
-    public E peekDownFrom( E reference, int level ) {
+    public E peekDownFrom(E reference, int level) {
         int t = top;
-        while ( t > 0 && storage[ t ] != reference ) {
+        while (!storage[t].equals(reference) && 0 < t) {
             t--;
         }
-        int k = t - level;
-        if ( k >= 0 && k < storage.length ) {
-            return storage[ k ];
-        } else {
+        if (t < level) {
             return null;
+        }
+        int k = t - level;
+        if (k < 0 || k >= storage.length) {
+            return null;
+        } else {
+            return storage[k];
         }
     }
 
-    @SuppressWarnings( "unchecked" )
-    static final Object[] EMPTY = new Object[ 0 ];
+    @SuppressWarnings("unchecked")
+    static final Object[] EMPTY = new Object[0];
 
-    @SuppressWarnings( "unchecked" )
-    public List<E> above( E reference, List<E> store ) {
+    /**
+     * Get the states that are on this stack above the reference
+     *
+     * @param reference
+     * @param found list to accept the found 'above' states.
+     * @return the found list
+     */
+    @SuppressWarnings("unchecked")
+    public List<E> above(E reference, List<E> found) {
         int t = top;
-        store.clear();
-        while ( t >= 0 && storage[ t ] != reference ) {
+        found.clear();
+        while (t >= 0 && storage[t] != reference) {
             t--;
         }
-        if ( t >= 0 ) {
-            t++;
-            for ( ; t <= top; t++ ) {
-                store.add( storage[ t ] );
-            }
+        if (t < 0) {
+            return found;
         }
-        return store;
+        t++;
+        for (; t <= top; t++) {
+            found.add(storage[t]);
+        }
+        return found;
     }
 
     /**
@@ -111,9 +122,9 @@ class StateStack<E> implements Stack<E> {
      * @param e to search.
      * @return true if contained.
      */
-    public boolean has( E e ) {
-        for ( int i = top; i >= 0; i-- ) {
-            if ( e.equals( storage[ i ] ) ) {
+    public boolean has(E e) {
+        for (int i = top; i >= 0; i--) {
+            if (e.equals(storage[i])) {
                 return true;
             }
         }
@@ -124,10 +135,10 @@ class StateStack<E> implements Stack<E> {
      * Make sure the stack has sufficient capacity to take the next push.
      */
     private void ensureCapacity() {
-        if ( top + 1 < storage.length ) {
+        if (top + 1 < storage.length) {
             return;
         }
-        storage = Arrays.copyOf( storage, storage.length * 2 );
+        storage = Arrays.copyOf(storage, storage.length * 2);
     }
 
     /**
@@ -150,12 +161,13 @@ class StateStack<E> implements Stack<E> {
 
     /**
      * Does this stack contain e?
+     *
      * @param e to test
      * @return result of test.
      */
-    public boolean contains( Object e ) {
-        for ( Object o : storage ) {
-            if ( e == o ) {
+    public boolean contains(Object e) {
+        for (Object o : storage) {
+            if (e == o) {
                 return true;
             }
         }
@@ -164,13 +176,14 @@ class StateStack<E> implements Stack<E> {
 
     /**
      * Get the logical state as a string.
+     *
      * @return the state hierarchy as a string
      */
     String logicalState() {
         String glue = "";
         StringBuilder result = new StringBuilder();
-        for ( int i = 1; i <= top; i++ ) {
-            result.append( glue ).append(storage[ i ]);
+        for (int i = 1; i <= top; i++) {
+            result.append(glue).append(storage[i]);
             glue = ".";
         }
         return result.toString();

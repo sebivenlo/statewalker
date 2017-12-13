@@ -12,26 +12,40 @@ import org.junit.Test;
  * @author hom
  */
 public class StateStackTest extends StackTestBase {
-
+    
     @Override
     Stack<String> createInstance() {
         return new StateStack<>();
     }
+    
+    @Test
+    public void testSize() {
+        StateStack<String> s = new StateStack<>(4);
+        assertEquals(0, s.size());
+        s.push("Hi");
+        assertEquals(1, s.size());
+    }
+
+    @Test
+    public void testCapacity() {
+        StateStack<String> s = new StateStack<>(4);
+        assertEquals(4, s.capacity());
+    }
 
     @Test
     public void watch_it_grow() {
-
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
+        
+        StateStack<String> stack = (StateStack<String>) createInstance();
         int ic = stack.capacity();
-        System.out.println( "cap=" + stack.capacity() );
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
+        System.out.println("cap=" + stack.capacity());
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
         }
-
-        System.out.println( "size=" + stack.size() );
-        System.out.println( "cap=" + stack.capacity() );
-        assertEquals( "grow by factor 2", 2 * ic, stack.capacity() );
+        
+        System.out.println("size=" + stack.size());
+        System.out.println("cap=" + stack.capacity());
+        assertEquals("grow by factor 2", 2 * ic, stack.capacity());
     }
 
     /**
@@ -39,114 +53,150 @@ public class StateStackTest extends StackTestBase {
      * exception is not thrown or the wrong exception is thrown, the test will
      * fail (red).
      */
-    @Test( expected = ArrayIndexOutOfBoundsException.class )
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     @Override
     public void empty_peek_should_bark() {
         super.empty_peek_should_bark();
     }
-
+    
     @Test
     public void after_pop_elements_are_nulled_out() {
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
         }
 
         // remove all elements
-        for ( int i = testData.length - 1; i >= 0; i-- ) {
-            String x = testData[ i ];
-            assertEquals( "Datum off stack", x, stack.pop() );
-            assertFalse( "and gone", stack.contains( x ) );
+        for (int i = testData.length - 1; i >= 0; i--) {
+            String x = testData[i];
+            assertEquals("Datum off stack", x, stack.pop());
+            assertFalse("and gone", stack.contains(x));
         }
-    }
-
-    @Test
-    public void cover_contains() {
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
-        }
-        assertFalse( "Not found", stack.contains( "Goner" ) );
-        assertTrue( "In Stack", stack.contains( testData[ 2 ] ) );
-
-    }
-
-    @Test
-    public void testHas() {
-
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
-        }
-        assertFalse( "Not found", stack.has( "G" ) );
-    }
-
-    @Test
-    public void testPeekDown() {
-
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
-        }
-        assertEquals( "found", "C", stack.peekDownFrom( "D", 1 ) );
-    }
-
-    @Test
-    public void testPeekDownNotFound() {
-
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
-        }
-        assertNull( "Not found", stack.peekDownFrom( "A", 1 ) );
-    }
-
-    @Test
-    public void testPeekUp() {
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
-        }
-        assertEquals( "found", "E", stack.peekDownFrom( "D", -1 ) );
-
-    }
-
-    @Test
-    public void testPeekUpNotFound() {
-        StateStack<String> stack = ( StateStack<String> ) createInstance();
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
-        }
-        assertNull( "Notfound", stack.peekDownFrom( "D", -2 ) );
-
-    }
-
-    @Test
-    public void testPeekUpOverTop() {
-        StateStack<String> stack = new StateStack<String>( 5 );
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
-        }
-        assertNull( "Notfound", stack.peekDownFrom( "E", -1 ) );
     }
     
     @Test
-    public void testAbove(){
-        StateStack<String> stack = new StateStack<String>( 5 );
-        String[] testData = { "A", "B", "C", "D", "E" };
-        for ( String s : testData ) {
-            stack.push( s );
+    public void cover_contains() {
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertFalse("Not found", stack.contains("Goner"));
+        assertTrue("In Stack", stack.contains(testData[2]));
+        
+    }
+    
+    @Test
+    public void testHas() {
+        
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertTrue("Not found", stack.has("A"));
+        assertTrue("Not found", stack.has("C"));
+        assertFalse("Not found", stack.has("G"));
+    }
+    
+    @Test
+    public void testPeekDown() {
+        
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertEquals("found", "C", stack.peekDownFrom("D", 1));
+    }
+
+    @Test
+    public void testPeekDownFirst() {
+        
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertEquals("found", "C", stack.peekDownFrom("E", 2));
+    }
+
+    @Test
+    public void testPeekDownBottom() {
+        
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertNull("found",  stack.peekDownFrom("B", 2));
+    }
+    
+    @Test
+    public void testPeekDownNotFound() {
+        
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertNull("Not found", stack.peekDownFrom("Z", 1));
+    }
+    
+    @Test
+    public void testPeekUp() {
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertEquals("found", "E", stack.peekDownFrom("D", -1));
+        
+    }
+    
+    @Test
+    public void testPeekUpNotFound() {
+        StateStack<String> stack = (StateStack<String>) createInstance();
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertNull("Notfound", stack.peekDownFrom("D", -2));
+        
+    }
+    
+    @Test
+    public void testPeekUpOverTop() {
+        StateStack<String> stack = new StateStack<String>(5);
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        assertNull("Notfound", stack.peekDownFrom("E", -1));
+    }
+    
+    @Test
+    public void testAbove() {
+        StateStack<String> stack = new StateStack<String>(5);
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
         }
         ArrayList<String> store = new ArrayList<>();
-        assertTrue(stack.above( "E", store ).isEmpty());
-        assertTrue("not empty",stack.above( "Z", store ).isEmpty());
+        assertTrue(stack.above("E", store).isEmpty());
+        assertTrue("not empty", stack.above("Z", store).isEmpty());
+    }
+
+    @Test
+    public void testAboveMore() {
+        StateStack<String> stack = new StateStack<String>(5);
+        String[] testData = {"A", "B", "C", "D", "E"};
+        for (String s : testData) {
+            stack.push(s);
+        }
+        ArrayList<String> store = new ArrayList<>();
+        assertEquals(4,stack.above("A", store).size());
+        
     }
 }
