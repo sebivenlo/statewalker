@@ -24,6 +24,7 @@
         <!-- <module>build-tools</module> -->
         <module>statewalker</module>
         <module>statewalkertest</module>
+        <module>sebipom</module>
     </modules>
 
     <url>https://www.fontysvenlo.org/repository</url>
