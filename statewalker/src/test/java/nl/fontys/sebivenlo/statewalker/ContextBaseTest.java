@@ -30,7 +30,7 @@ public class ContextBaseTest {
                 ContextBaseTest.exited = true;
             }
 
-        },SB3;
+        }, SB3;
 
         @Override
         public State getNullState() {
@@ -53,7 +53,7 @@ public class ContextBaseTest {
 
         public CTX( Dev d ) {
             super( SB.class );
-            super.device = d;
+            setDevice( d );
         }
 
     }
@@ -112,10 +112,10 @@ public class ContextBaseTest {
         mh.flush();
         cb.addStateInternal( SB1 );
         mh.flush();
-        cb.changeFromToState( "try", SB1, SB2,SB3 );
-        assertTrue( "wrong message " + mh.lastMessage, mh.lastMessage.contains( 
+        cb.changeFromToState( "try", SB1, SB2, SB3 );
+        assertTrue( "wrong message " + mh.lastMessage, mh.lastMessage.contains(
                 "from" ) );
-        assertTrue( "wrong message " + mh.lastMessage, mh.lastMessage.contains( 
+        assertTrue( "wrong message " + mh.lastMessage, mh.lastMessage.contains(
                 "event" ) );
 
         assertTrue( "wrong state ", mh.lastParams.contains( "SB1" ) );

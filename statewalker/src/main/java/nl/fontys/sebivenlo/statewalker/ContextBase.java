@@ -21,7 +21,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     private static final Logger LOGGER = Logger.getLogger( ContextBase.class.
             getName() );
     private final List<List<S>> deepHistoryMap;
-    protected D device;
+    private D device;
 
     /**
      * Create a context for a state machine with states of type stateClass.
@@ -85,6 +85,9 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
         doDeepHistory();
     }
 
+    /**
+     * Check for deep history activation.
+     */
     private void doDeepHistory() {
         S topState = stack.peek();
         List<S> hist = deepHistoryMap.get( topState.ordinal() );
@@ -96,6 +99,11 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
         }
     }
 
+    /**
+     * Enter the given state and check if history should be activated.
+     *
+     * @param state to enter
+     */
     public final void enterState( S state ) {
         addStateInternal( state );
 
@@ -103,39 +111,16 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     }
 
     /**
-     * Add and invoke {@code enter()} on each state in the list. At the end of
-     * this method, the state hierarchy has "grown" with the states in the list
-     * state.
-     *
-     * @param state to add.
-     */
-//    @SafeVarargs
-//    @SuppressWarnings( "unchecked" )
-//    private final void _addState( S... state ) {
-//        for ( S childState : state ) {
-//            addStateInternal( childState );
-//        }
-//    }
-
-    /**
      * Add and enter state.
+     *
      * @param childState to add and enter.
      */
     final void addStateInternal( S childState ) {
         stack.push( childState );
-        getTopState().enter( (C) this );
+        getTopState()
+                .enter( (C) this );
     }
-    
-//    /**
-//     * Add and enter state, checks deep history.
-//     * @param childState to add and enter
-//     */
-//    public final void addState( S childState ) {
-//        addStateInternal( childState );
-//        doDeepHistory();
-//    }
-//
-    
+
     /**
      * Top state (child-most) state is the place where to enter the events.
      *
@@ -219,14 +204,14 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     @SafeVarargs
     public final void changeFromToState( String event, S start, S... endState ) {
-        String ls = preLog( );
+        String ls = preLog();
         leaveState( start );
         enterState( endState );
         postLog( ls, event );
     }
 
     public final void changeFromToState( String event, S start, S endState ) {
-        String ls = preLog( );
+        String ls = preLog();
         leaveState( start );
         enterState( endState );
         postLog( ls, event );
@@ -239,7 +224,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
         }
     }
 
-    private String preLog( ) {
+    private String preLog() {
         String ls = "";
         if ( LOGGER.isLoggable( Level.FINE ) ) {
             ls = logicalState();
@@ -257,7 +242,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     @SafeVarargs
     public final void innerTransition( String event, S start, S... endState ) {
-        String ls = preLog(  );
+        String ls = preLog();
         leaveSubStates( start );
         enterState( endState );
         postLog( ls, event );
@@ -318,4 +303,15 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
         debug = d;
         return (C) this;
     }
+
+    /**
+     * Set the device for this context and return this context.
+     * @param device to set
+     * @return this context
+     */
+    public C setDevice( D device ) {
+        this.device = device;
+        return (C) this;
+    }
+
 }

@@ -10,7 +10,7 @@ public class Context extends ContextBase<Context, Dev, State> {
 
     public Context( Class<?> stateClass, Dev d ) {
         super( stateClass );
-        this.device = d;
+        setDevice( d );
     }
 
     void e1() {
