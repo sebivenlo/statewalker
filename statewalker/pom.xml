@@ -9,7 +9,10 @@
     </parent>
     <groupId>nl.fontys.sebivenlo</groupId>
     <artifactId>statewalker</artifactId>
-    <version>2.2.1</version>
+    <version>3.0</version>
     <packaging>jar</packaging>
     <name>SEBIVenlo :: Statewalker</name>
+    <properties>
+        <pitTargetClasses>nl.fontys.sebivenlo.**</pitTargetClasses>
+    </properties>
 </project>
