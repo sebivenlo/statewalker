@@ -527,7 +527,10 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      *
      * @param event name for the transition
      * @param start state that is NOT left
-     * @param endState new inner state.
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
      */
     public final void innerTransition( String event, S start, S es1, S es2,
             S es3, S es4 ) {
@@ -543,7 +546,11 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      *
      * @param event name for the transition
      * @param start state that is NOT left
-     * @param endState new inner state.
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     * @param es5 end state
      */
     public final void innerTransition( String event, S start, S es1, S es2,
             S es3, S es4, S es5 ) {
@@ -559,7 +566,12 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      *
      * @param event name for the transition
      * @param start state that is NOT left
-     * @param endState new inner state.
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     * @param es5 end state
+     * @param extraStates end state
      */
     @SafeVarargs
     public final void innerTransition( String event, S start, S es1, S es2,
