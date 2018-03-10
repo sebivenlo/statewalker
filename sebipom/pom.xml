@@ -16,7 +16,7 @@
     </developers>
     <groupId>nl.fontys.sebivenlo</groupId>
     <artifactId>sebipom</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>pom</packaging>
 
     <name>SEBIVenlo :: SEBIPom</name>
@@ -35,7 +35,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.lib.dir>/usr/share/java</java.lib.dir>
-        <checkstyle.config.location>${project.parent.basedir}/sebivenlo_checks.xml</checkstyle.config.location>
+        <checkstyle.config.location>${user.home}/Library/sebivenlo_checks.xml</checkstyle.config.location>
 
     </properties>
 
@@ -97,6 +97,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
+                    <finalName>${finalName}</finalName>
                     <archive>
                         <manifest>
                             <mainClass>${mainClass}</mainClass>
@@ -194,16 +195,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <consoleOutput>true</consoleOutput>
-                </configuration>
-
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
             </plugin>
@@ -286,6 +277,42 @@
                     <excludeRoots>
                         <excludeRoot>target/generated-sources/stubs</excludeRoot>
                     </excludeRoots>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <linkXRef>true</linkXRef>
+                </configuration>
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.9.0</version>
+                <configuration>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>1.8</targetJdk>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
+                <configuration></configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.5</version>
+                <configuration>
+                    <xmlOutput>true</xmlOutput>
                 </configuration>
             </plugin>
         </plugins>
