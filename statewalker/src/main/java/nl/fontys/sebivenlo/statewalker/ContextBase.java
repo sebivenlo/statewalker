@@ -21,7 +21,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     private static final Logger LOGGER = Logger.getLogger( ContextBase.class.
             getName() );
     private final List<List<S>> deepHistoryMap;
-    protected D device;
+    private D device;
 
     /**
      * Create a context for a state machine with states of type stateClass.
@@ -35,12 +35,12 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
             //this.initialMap = new ArrayList<>( enums.length );
             this.deepHistoryMap = new ArrayList<>( enums.length );
             for ( Object aEnum : enums ) {
-                S is = ( ( S ) aEnum ).getInitialState();
+                S is = ( (S) aEnum ).getInitialState();
                 List<S> iss = new ArrayList<>();
                 iss.add( is );
                 this.deepHistoryMap.add( iss );
             }
-            nullState = ( ( S ) enums[ 0 ] ).getNullState();
+            nullState = ( (S) enums[ 0 ] ).getNullState();
         } else {
             nullState = null;
             deepHistoryMap = null;
@@ -62,7 +62,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
                 this.enterState( initialState );
             }
         }
-        return ( C ) this;
+        return (C) this;
     }
 
     /**
@@ -79,34 +79,46 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     @SuppressWarnings( "unchecked" )
     public final void enterState( S... state ) {
         for ( S s : state ) {
-            addState( s );
+            addStateInternal( s );
         }
 
-        S topState = stack.peek();
+        doDeepHistory();
+    }
 
+    /**
+     * Check for deep history activation.
+     */
+    private void doDeepHistory() {
+        S topState = stack.peek();
         List<S> hist = deepHistoryMap.get( topState.ordinal() );
         for ( S s : hist ) {
             if ( s == null ) {
                 break;
             }
-            addState( s );
+            addStateInternal( s );
         }
     }
 
     /**
-     * Add and invoke {@code enter()} on each state in the list. At the end of
-     * this method, the state hierarchy has "grown" with the states in the list
-     * state.
+     * Enter the given state and check if history should be activated.
      *
-     * @param state to add.
+     * @param state to enter
      */
-    @SafeVarargs
-    @SuppressWarnings( "unchecked" )
-    public final void addState( S... state ) {
-        for ( S childState : state ) {
-            stack.push( childState );
-            childState.enter( ( C ) this );
-        }
+    public final void enterState( S state ) {
+        addStateInternal( state );
+
+        doDeepHistory();
+    }
+
+    /**
+     * Add and enter state.
+     *
+     * @param childState to add and enter.
+     */
+    final void addStateInternal( S childState ) {
+        stack.push( childState );
+        getTopState()
+                .enter( (C) this );
     }
 
     /**
@@ -125,10 +137,10 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     @SuppressWarnings( "unchecked" )
     public final void leaveSubStates( S state ) {
-        if ( !stack.has( state ) ) {
+        if (  ! stack.has( state ) ) {
             throw new IllegalArgumentException( "Cannot leave state '" + state
                     + "' because it is not active\n"
-                            + " current state is "+logicalState() );
+                    + " current state is " + logicalState() );
         }
         S topState = stack.peek();
         while ( topState != state ) {
@@ -156,7 +168,8 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
 
     @SuppressWarnings( "unchecked" )
     private void leaveAndPop() {
-        stack.peek().exit( ( C ) this );
+        stack.peek()
+                .exit( (C) this );
         stack.pop();
     }
 
@@ -185,44 +198,54 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      * sub-states. For the start state the leave method is invoked, for each
      * state in endState the enter state is invoked.
      *
-     * @param event    name for the transition
-     * @param start    state to leave
+     * @param event name for the transition
+     * @param start state to leave
      * @param endState states to enter in order given.
      */
     @SafeVarargs
     public final void changeFromToState( String event, S start, S... endState ) {
-        String ls = "";
-        if ( LOGGER.isLoggable( Level.FINE ) ) {
-            ls = logicalState();
-        }
+        String ls = preLog();
         leaveState( start );
         enterState( endState );
+        postLog( ls, event );
+    }
+
+    public final void changeFromToState( String event, S start, S endState ) {
+        String ls = preLog();
+        leaveState( start );
+        enterState( endState );
+        postLog( ls, event );
+    }
+
+    private void postLog( String ls, String event ) {
         if ( LOGGER.isLoggable( Level.FINE ) ) {
             LOGGER.log( Level.FINE, "from {0}, event [{1}] to {2}",
                     new Object[]{ ls, event, logicalState() } );
         }
     }
 
-    /**
-     * Do a transition with out leaving this state. The sub states of state are
-     * left, then the endStates are entered in the order given.
-     *
-     * @param event    name for the transition
-     * @param start    state that is NOT left
-     * @param endState new inner state.
-     */
-    @SafeVarargs
-    public final void innerTransition( String event, S start, S... endState ) {
+    private String preLog() {
         String ls = "";
         if ( LOGGER.isLoggable( Level.FINE ) ) {
             ls = logicalState();
         }
+        return ls;
+    }
+
+    /**
+     * Do a transition with out leaving this state. The sub states of state are
+     * left, then the endStates are entered in the order given.
+     *
+     * @param event name for the transition
+     * @param start state that is NOT left
+     * @param endState new inner state.
+     */
+    @SafeVarargs
+    public final void innerTransition( String event, S start, S... endState ) {
+        String ls = preLog();
         leaveSubStates( start );
         enterState( endState );
-        if ( LOGGER.isLoggable( Level.FINE ) ) {
-            LOGGER.log( Level.FINE, "from {0}, event [{1}] to {2}",
-                    new Object[]{ ls, event, logicalState() } );
-        }
+        postLog( ls, event );
     }
 
     /**
@@ -278,6 +301,17 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     @SuppressWarnings( "unchecked" )
     public C setDebug( boolean d ) {
         debug = d;
-        return ( C ) this;
+        return (C) this;
     }
+
+    /**
+     * Set the device for this context and return this context.
+     * @param device to set
+     * @return this context
+     */
+    public C setDevice( D device ) {
+        this.device = device;
+        return (C) this;
+    }
+
 }

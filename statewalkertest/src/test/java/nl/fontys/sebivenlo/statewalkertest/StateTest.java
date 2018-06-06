@@ -1,7 +1,6 @@
 package nl.fontys.sebivenlo.statewalkertest;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * For coverage. Some methods are never called in the transition tests.
@@ -20,7 +19,7 @@ public class StateTest {
     public void testDefaultMethods() {
         State x = StateEnum.A;
         Context ctx = new Context( StateEnum.class, d ).initialize();
-        ctx.addState( x );
+        ctx.enterState( x );
         x.e1( ctx );
         x.e2( ctx );
         x.e3( ctx );

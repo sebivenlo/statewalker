@@ -21,7 +21,7 @@ enum S implements State {
 
         @Override
         public void e8( Context ctx ) {
-            ctx.changeFromToState( "e8", this, S3,S32 );
+            ctx.changeFromToState( "e8", this, S3, S32 );
         }
     }, S1 {
         @Override
@@ -70,8 +70,8 @@ enum S implements State {
             ctx.changeFromToState( "e13", S2, S1 );
         }
     },
-    S3{
-    
+    S3 {
+
         @Override
         public void e12( Context ctx ) {
             ctx.changeFromToState( "e12", this, S1 );
@@ -81,26 +81,38 @@ enum S implements State {
         public void e10( Context ctx ) {
             ctx.changeFromToState( "e10", this, S32 );
         }
-    }, S32{
+    }, S32 {
         @Override
         public void e10( Context ctx ) {
             ctx.changeFromToState( "e10", this, S33 );
         }
-    }, S33{
+    }, S33 {
         @Override
         public void e10( Context ctx ) {
             ctx.changeFromToState( "e10", this, S31 );
         }
-    
-    }, S331{
+
+    }, S331 {
         @Override
         public void e11( Context ctx ) {
             ctx.changeFromToState( "e11", this, S332 );
         }
-    }, S332{
+    }, S332 {
         @Override
         public void e11( Context ctx ) {
-            ctx.changeFromToState( "e11", this, S331);
+            ctx.changeFromToState( "e11", this, S331 );
+        }
+    },
+    S321 {
+        @Override
+        public void e11( Context ctx ) {
+            ctx.changeFromToState( "e11", this, S322 );
+        }
+    },
+    S322 {
+        @Override
+        public void e11( Context ctx ) {
+            ctx.changeFromToState( "e11", this, S321 );
         }
     },
     /**
@@ -169,6 +181,7 @@ enum S implements State {
     };
 
     static S[] s1Subtates = { S11, S12 };
+
     /**
      * All instances give the same answer.
      *
@@ -189,6 +202,7 @@ enum S implements State {
         initialMap.put( S22, S221 );
         initialMap.put( S3, S31 );
         initialMap.put( S33, S331 );
+        initialMap.put( S32, S321 );
     }
 
     /**
@@ -214,7 +228,7 @@ enum S implements State {
         return isHist.contains( this );
     }
 
-    private static final EnumSet<S> isDeepHist = EnumSet.<S>of( S3 );
+    private static final EnumSet<S> isDeepHist = EnumSet.<S>of( S3, S32 );
 
     /**
      * Whether or not a state maintains history of its sub state.

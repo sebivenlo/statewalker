@@ -118,55 +118,55 @@ enum S implements State {
      */
     NULL {
         @Override
-        public void e1(Context ctx) {
+        public void e1(Context ctx) {ignore();
         }
 
         @Override
-        public void e2(Context ctx) {
+        public void e2(Context ctx) {ignore();
         }
 
         @Override
-        public void e3(Context ctx) {
+        public void e3(Context ctx) {ignore();
         }
 
         @Override
-        public void e4(Context ctx) {
+        public void e4(Context ctx) {ignore();
         }
 
         @Override
-        public void e5(Context ctx) {
+        public void e5(Context ctx) {ignore();
         }
 
         @Override
-        public void e6(Context ctx) {
+        public void e6(Context ctx) {ignore();
         }
 
         @Override
-        public void e7(Context ctx) {
+        public void e7(Context ctx) {ignore();
         }
 
         @Override
-        public void e8(Context ctx) {
+        public void e8(Context ctx) {ignore();
         }
 
         @Override
-        public void e9(Context ctx) {
+        public void e9(Context ctx) {ignore();
         }
 
         @Override
-        public void e10(Context ctx) {
+        public void e10(Context ctx) {ignore();
         }
 
         @Override
-        public void e11(Context ctx) {
+        public void e11(Context ctx) {ignore();
         }
 
         @Override
-        public void e12(Context ctx) {
+        public void e12(Context ctx) {ignore();
         }
 
         @Override
-        public void e13(Context ctx) {
+        public void e13(Context ctx) {ignore();
         }
 
         @Override
@@ -178,12 +178,12 @@ enum S implements State {
         }
     };
 
+    //static S[] s1Subtates = {S11, S12};
     /**
      * All instances give the same answer.
      *
-     * @return
+     * @return the null state.
      */
-    static S[] s1Subtates = {S11, S12};
 
     @Override
     public State getNullState() {
@@ -235,5 +235,14 @@ enum S implements State {
     @Override
     public boolean isInitialStateDeepHistory() {
         return isDeepHist.contains(this);
+    }
+    
+    public void ignore(){
+        ignoredEventCounter++;
+    }
+    private static int ignoredEventCounter=0;
+
+    static int getIgnoredEventCounter() {
+        return ignoredEventCounter;
     }
 }
