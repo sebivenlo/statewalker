@@ -49,5 +49,4 @@
         <java.lib.dir>/usr/share/java</java.lib.dir>
         <checkstyle.config.location>${project.parent.basedir}/sebivenlo_checks.xml</checkstyle.config.location>
     </properties>
-
 </project>

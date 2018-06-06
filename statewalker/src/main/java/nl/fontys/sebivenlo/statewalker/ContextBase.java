@@ -66,26 +66,6 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     }
 
     /**
-     * Enter a specific state hierarchy. enterState adds all states listed to
-     * the current state stack and invokes the {@code enter()} method for each
-     * state.
-     *
-     * If the top most state has a history stored, that history is resumed in
-     * the same way as the states were added as per previous description.
-     *
-     * @param state states to enter.
-     */
-    @SafeVarargs
-    @SuppressWarnings( "unchecked" )
-    public final void enterState( S... state ) {
-        for ( S s : state ) {
-            addStateInternal( s );
-        }
-
-        doDeepHistory();
-    }
-
-    /**
      * Check for deep history activation.
      */
     private void doDeepHistory() {
@@ -111,14 +91,175 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     }
 
     /**
+     * Enter the given states and check if history should be activated.
+     *
+     * @param s1 to enter
+     * @param s2 to enter
+     */
+    public final void enterState( S s1, S s2 ) {
+        addStateInternal( s1, s2 );
+
+        doDeepHistory();
+    }
+
+    /**
+     * Enter the given states and check if history should be activated.
+     *
+     * @param s1 state to enter
+     * @param s2 state to enter
+     * @param s3 state to enter
+     */
+    public final void enterState( S s1, S s2, S s3 ) {
+        addStateInternal( s1, s2, s3 );
+        doDeepHistory();
+    }
+
+    /**
+     * Enter the given states and check if history should be activated.
+     *
+     * @param s1 state to enter
+     * @param s2 state to enter
+     * @param s3 state to enter
+     * @param s4 state to enter
+     */
+    public final void enterState( S s1, S s2, S s3, S s4 ) {
+        addStateInternal( s1,s2,s3,s4 );
+        doDeepHistory();
+    }
+
+    /**
+     * Enter the given states and check if history should be activated.
+     *
+     * @param s1 state to enter
+     * @param s2 state to enter
+     * @param s3 state to enter
+     * @param s4 state to enter
+     * @param s5 state to enter
+     */
+    public final void enterState( S s1, S s2, S s3, S s4, S s5 ) {
+        addStateInternal( s1 ,s2,s3,s4,s5);
+        doDeepHistory();
+    }
+
+    /**
+     * Enter a specific state hierarchy. enterState adds all states listed to
+     * the current state stack and invokes the {@code enter()} method for each
+     * state.
+     *
+     * If the top most state has a history stored, that history is resumed in
+     * the same way as the states were added as per previous description.
+     *
+     * @param s1 end state
+     * @param s2 end state
+     * @param s3 end state
+     * @param s4 end state
+     * @param s5 end state
+     * @param extrastates inner/top most end state
+     */
+    @SafeVarargs
+    @SuppressWarnings( "unchecked" )
+    public final void enterState( S s1, S s2, S s3, S s4, S s5, S... extrastates ) {
+        addStateInternal( s1,s2,s3,s4,s5, extrastates );
+        doDeepHistory();
+    }
+
+    /**
      * Add and enter state.
      *
      * @param childState to add and enter.
      */
     final void addStateInternal( S childState ) {
         stack.push( childState );
-        getTopState()
-                .enter( (C) this );
+        getTopState().enter( (C) this );
+    }
+
+    /**
+     * Add and enter state.
+     *
+     * @param childState to add and enter.
+     * @param s2 end state
+     */
+    final void addStateInternal( S childState, S s2 ) {
+        stack.push( childState );
+        getTopState().enter( (C) this );
+        stack.push( s2 );
+        getTopState().enter( (C) this );
+    }
+
+    /**
+     * Add and enter state.
+     *
+     * @param childState to add and enter.
+     * @param s2 end state
+     */
+    final void addStateInternal( S childState, S s2, S s3 ) {
+        stack.push( childState );
+        getTopState().enter( (C) this );
+        stack.push( s2 );
+        getTopState().enter( (C) this );
+        stack.push( s3 );
+        getTopState().enter( (C) this );
+    }
+
+    /**
+     * Add and enter state.
+     *
+     * @param childState to add and enter.
+     * @param s2 end state
+     */
+    final void addStateInternal( S childState, S s2, S s3, S s4 ) {
+        stack.push( childState );
+        getTopState().enter( (C) this );
+        stack.push( s2 );
+        getTopState().enter( (C) this );
+        stack.push( s3 );
+        getTopState().enter( (C) this );
+        stack.push( s4 );
+        getTopState().enter( (C) this );
+    }
+
+    /**
+     * Add and enter state.
+     *
+     * @param childState to add and enter.
+     * @param s2 end state
+     */
+    final void addStateInternal( S childState, S s2, S s3, S s4, S s5 ) {
+        stack.push( childState );
+        getTopState().enter( (C) this );
+        stack.push( s2 );
+        getTopState().enter( (C) this );
+        stack.push( s3 );
+        getTopState().enter( (C) this );
+        stack.push( s4 );
+        getTopState().enter( (C) this );
+        stack.push( s5 );
+        getTopState().enter( (C) this );
+    }
+
+    /**
+     * Add and enter state.
+     *
+     * @param childState to add and enter.
+     * @param s2 end state
+     */
+    final void addStateInternal( S childState, S s2, S s3, S s4, S s5,
+            S... extras ) {
+        stack.push( childState );
+        getTopState().enter( (C) this );
+        stack.push( s2 );
+        getTopState().enter( (C) this );
+        stack.push( s3 );
+        getTopState().enter( (C) this );
+        stack.push( s4 );
+        getTopState().enter( (C) this );
+        stack.push( s5 );
+        getTopState().enter( (C) this );
+        for ( S extra : extras ) {
+            stack.push( extra );
+            getTopState().enter( (C) this );
+
+        }
     }
 
     /**
@@ -137,7 +278,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     @SuppressWarnings( "unchecked" )
     public final void leaveSubStates( S state ) {
-        if (  ! stack.has( state ) ) {
+        if ( !stack.has( state ) ) {
             throw new IllegalArgumentException( "Cannot leave state '" + state
                     + "' because it is not active\n"
                     + " current state is " + logicalState() );
@@ -200,20 +341,119 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      *
      * @param event name for the transition
      * @param start state to leave
-     * @param endState states to enter in order given.
+     * @param es states to enter in order given.
      */
-    @SafeVarargs
-    public final void changeFromToState( String event, S start, S... endState ) {
+    public final void changeFromToState( String event, S start, S es ) {
         String ls = preLog();
         leaveState( start );
-        enterState( endState );
+        enterState( es );
         postLog( ls, event );
     }
 
-    public final void changeFromToState( String event, S start, S endState ) {
+    /**
+     * Do a full transition from a current state to a new state with 2
+     * sub-states. For the start state the leave method is invoked, for each
+     * state in endState the enter state is invoked.
+     *
+     * @param event name for the transition
+     * @param start state to leave
+     * @param es1 end state
+     * @param es2 end state
+     */
+    //@SafeVarargs
+    public final void changeFromToState( String event, S start, S es1, S es2 ) {
         String ls = preLog();
         leaveState( start );
-        enterState( endState );
+        addStateInternal( es1 );
+        enterState( es2 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a full transition from a current state to a new state 2 sub-states.
+     * For the start state the leave method is invoked, for each state in
+     * endState the enter state is invoked.
+     *
+     * @param event name for the transition
+     * @param start state to leave
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     */
+    //@SafeVarargs
+    public final void changeFromToState( String event, S start, S es1, S es2,
+            S es3 ) {
+        String ls = preLog();
+        leaveState( start );
+        addStateInternal( es1, es2 );
+        enterState( es3 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a full transition from a current state to a new state with optional
+     * sub-states. For the start state the leave method is invoked, for each
+     * state in endState the enter state is invoked.
+     *
+     * @param event name for the transition
+     * @param start state to leave
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     */
+    //@SafeVarargs
+    public final void changeFromToState( String event, S start, S es1, S es2,
+            S es3, S es4 ) {
+        String ls = preLog();
+        leaveState( start );
+        addStateInternal( es1, es2, es3 );
+        enterState( es4 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a full transition from a current state to a new state with 4
+     * sub-states. For the start state the leave method is invoked, for each
+     * state in endState the enter state is invoked.
+     *
+     * @param event name for the transition
+     * @param start state to leave
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     * @param es5 end state
+     */
+    public final void changeFromToState( String event, S start, S es1, S es2,
+            S es3, S es4, S es5 ) {
+        String ls = preLog();
+        leaveState( start );
+        addStateInternal( es1, es2, es3, es4 );
+        enterState( es5 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a full transition from a current state to a sequence of 5 new states
+     * with optional sub-states. For the start state the leave method is
+     * invoked, for each state in endState the enter state is invoked.
+     *
+     * @param event name for the transition
+     * @param start state to leave
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     * @param es5 end state
+     * @param extraStates end states
+     */
+    @SafeVarargs
+    public final void changeFromToState( String event, S start, S es1, S es2,
+            S es3, S es4, S es5, S... extraStates ) {
+        String ls = preLog();
+        leaveState( start );
+        enterState( es1, es2, es3, es4, es5, extraStates );
         postLog( ls, event );
     }
 
@@ -240,11 +480,105 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      * @param start state that is NOT left
      * @param endState new inner state.
      */
-    @SafeVarargs
-    public final void innerTransition( String event, S start, S... endState ) {
+    public final void innerTransition( String event, S start, S endState ) {
         String ls = preLog();
         leaveSubStates( start );
         enterState( endState );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a transition with out leaving this state. The sub states of state are
+     * left, then the endStates are entered in the order given.
+     *
+     * @param event name for the transition
+     * @param start state that is NOT left
+     * @param es1 end state
+     * @param es2 end state
+     */
+    public final void innerTransition( String event, S start, S es1, S es2 ) {
+        String ls = preLog();
+        leaveSubStates( start );
+        enterState( es1, es2 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a transition with out leaving this state. The sub states of state are
+     * left, then the endStates are entered in the order given.
+     *
+     * @param event name for the transition
+     * @param start state that is NOT left
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     */
+    public final void innerTransition( String event, S start, S es1, S es2,
+            S es3 ) {
+        String ls = preLog();
+        leaveSubStates( start );
+        enterState( es1, es2, es3 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a transition with out leaving this state. The sub states of state are
+     * left, then the endStates are entered in the order given.
+     *
+     * @param event name for the transition
+     * @param start state that is NOT left
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     */
+    public final void innerTransition( String event, S start, S es1, S es2,
+            S es3, S es4 ) {
+        String ls = preLog();
+        leaveSubStates( start );
+        enterState( es1, es2, es3, es4 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a transition with out leaving this state. The sub states of state are
+     * left, then the endStates are entered in the order given.
+     *
+     * @param event name for the transition
+     * @param start state that is NOT left
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     * @param es5 end state
+     */
+    public final void innerTransition( String event, S start, S es1, S es2,
+            S es3, S es4, S es5 ) {
+        String ls = preLog();
+        leaveSubStates( start );
+        enterState( es1, es2, es3, es4, es5 );
+        postLog( ls, event );
+    }
+
+    /**
+     * Do a transition with out leaving this state. The sub states of state are
+     * left, then the endStates are entered in the order given.
+     *
+     * @param event name for the transition
+     * @param start state that is NOT left
+     * @param es1 end state
+     * @param es2 end state
+     * @param es3 end state
+     * @param es4 end state
+     * @param es5 end state
+     * @param extraStates end state
+     */
+    @SafeVarargs
+    public final void innerTransition( String event, S start, S es1, S es2,
+            S es3, S es4, S es5, S... extraStates ) {
+        String ls = preLog();
+        leaveSubStates( start );
+        enterState( es1, es2, es3, es4, es5, extraStates );
         postLog( ls, event );
     }
 
@@ -306,6 +640,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
 
     /**
      * Set the device for this context and return this context.
+     *
      * @param device to set
      * @return this context
      */
