@@ -43,4 +43,14 @@
         <java.lib.dir>/usr/share/java</java.lib.dir>
         <checkstyle.config.location>${project.parent.basedir}/sebivenlo_checks.xml</checkstyle.config.location>
     </properties>
+    <build>
+        <extensions>
+            <!-- Enabling the use of SSH -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>3.0.0</version>
+            </extension>
+        </extensions>
+    </build>
 </project>
