@@ -26,12 +26,6 @@
         <module>statewalkertest</module>
         <module>sebipom</module>
     </modules>
-    <parent>
-        <groupId>nl.fontys.sebivenlo</groupId>
-        <artifactId>sebipom</artifactId>
-        <version>1.0</version>
-        <relativePath>sebipom</relativePath>
-    </parent>
     <url>https://www.fontysvenlo.org/repository</url>
 
     <distributionManagement>
