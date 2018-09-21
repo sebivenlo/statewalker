@@ -12,7 +12,7 @@
     <name>SEBIVenlo :: StatewalkerTest</name>
     <groupId>nl.fontys.sebivenlo</groupId>
     <artifactId>statewalkertest</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
     <packaging>jar</packaging>
     <properties>
         <pitTargetClasses>nl.fontys.sebivenlo.**</pitTargetClasses>
