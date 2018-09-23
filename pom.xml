@@ -16,7 +16,7 @@
     </developers>
     <groupId>nl.fontys.sebivenlo</groupId>
     <artifactId>statewalkerparent</artifactId>
-    <version>1.1</version>
+    <version>1.4</version>
     <packaging>pom</packaging>
 
     <name>SEVenlo :: StateWalkerParent</name>
@@ -26,6 +26,12 @@
         <module>statewalkertest</module>
         <module>sebipom</module>
     </modules>
+    <parent>
+        <groupId>nl.fontys.sebivenlo</groupId>
+        <artifactId>sebipom</artifactId>
+        <version>1.4</version>
+        <relativePath>sebipom</relativePath>
+    </parent>
     <url>https://www.fontysvenlo.org/repository</url>
 
     <distributionManagement>
