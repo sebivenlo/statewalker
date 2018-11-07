@@ -21,7 +21,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     private static final Logger LOGGER = Logger.getLogger( ContextBase.class.
             getName() );
     private final List<List<S>> deepHistoryMap;
-    private D device;
+    protected D device;
 
     /**
      * Create a context for a state machine with states of type stateClass.
