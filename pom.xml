@@ -29,7 +29,7 @@
     <parent>
         <groupId>nl.fontys.sebivenlo</groupId>
         <artifactId>sebipom</artifactId>
-        <version>1.3.1</version>
+        <version>1.3.3</version>
         <relativePath>sebipom</relativePath>
     </parent>
     <url>https://www.fontysvenlo.org/repository</url>

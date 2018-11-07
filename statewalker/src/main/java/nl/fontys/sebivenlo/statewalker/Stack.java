@@ -21,7 +21,7 @@ interface Stack<E> {
     E peek();
 
     /**
-     * Get and remove element
+     * Get and remove element.
      *
      * @return the top element
      * @throws RuntimeException if peek in the same state of this stack.

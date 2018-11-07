@@ -43,7 +43,7 @@ class StateStack<E> implements Stack<E> {
     }
 
     /**
-     * Get and remove element
+     * Get and remove element.
      *
      * @return the top element
      * @throws RuntimeException if peek in the same state of this stack.
@@ -93,7 +93,7 @@ class StateStack<E> implements Stack<E> {
     static final Object[] EMPTY = new Object[0];
 
     /**
-     * Get the states that are on this stack above the reference
+     * Get the states that are on this stack above the reference.
      *
      * @param reference
      * @param found list to accept the found 'above' states.
