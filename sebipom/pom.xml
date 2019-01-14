@@ -117,7 +117,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.8.1</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
@@ -170,12 +170,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20.1</version>
+                <version>2.21.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.20.1</version>
+                <version>2.21.0</version>
                 <executions>
                     <execution>
                         <id>default-integration-test</id>
@@ -188,7 +188,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.6</version>
+                <version>3.7.1</version>
                 <configuration>
                     <outputEncoding>UTF-8</outputEncoding>
                 </configuration>
@@ -201,7 +201,7 @@
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.2.5</version>
+                <version>1.4.0</version>
                 <configuration>
                     <targetClasses>
                         <param>${pitTargetClasses}</param>
@@ -230,6 +230,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <additionalParam>-Xdoclint:none</additionalParam>
+                    <additionalParam>-html5</additionalParam>
                     <additionalOptions>--allow-script-in-comments</additionalOptions>
                     <resourcesArtifacts>
                         <resourceArtifact>
@@ -265,7 +266,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.8</version>
+                <version>3.9.0</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
@@ -282,7 +283,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
+                <version>3.0.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
@@ -327,7 +328,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.15.0</version>
+            <version>2.18.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
