@@ -1,6 +1,6 @@
 include Makefile.macros
 
-# voeg eventueel subdisr toe die ook een asciidcotor run nodig hebben
+# voeg eventueel subdisr toe die ook een asciidoctor run nodig hebben
 # Die hebben dan ook een Makefile nodig. Zie als voorbeeld de Makefile onder restricted.
 all: index.html
 

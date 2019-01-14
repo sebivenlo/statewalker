@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.7.1">
 <title>SeBi Venlo State Walker</title>
 <link rel="stylesheet" href="css/asciidoctor.css">
 </head>
@@ -35,15 +35,17 @@ To change a state the code typically uses one method: <code>changeFromeToState(S
 <div class="sect2">
 <h3 id="_apply_it_to_your_project"><a class="link" href="#_apply_it_to_your_project">Apply it to your project:</a></h3>
 <div class="paragraph">
-<p>To make it work in your project, you have to some work yourselves.
-. Implement a Context that extends BaseContext like this
-. Extend a State interface with default method handlers for ALL events (methods) relevant to your state machine.
-. Have a StateEnum implement this State interface. Since the interface has default methods only, a state only has to overwrite
-any method that is relevant to this state.
+<p>To make it work in your project, you have to do some work yourselves.
+. Implement a Context that extends <code>BaseContext</code> like the code below.
+. Extend a <code>State</code> interface with default method handlers for ALL events (methods) relevant to your state machine.
+. Have a <code>StateEnum</code> implement this State interface. Since the interface has default methods only, a state only has to overwrite
+ any method that is relevant to this state.
 . You will also need a <em>Device</em> that can be asked from the context and can be manipulated (as in: call methods on it) in the states.
-What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor.
-=== The Context</p>
+What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor, lights etc.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_the_context"><a class="link" href="#_the_context">The Context</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Context</span> <span class="directive">extends</span> ContextBase&lt;<span class="predefined-type">Context</span>, Dev, State&gt; {
@@ -98,10 +100,12 @@ What the 'device' is and what it can do is up to you. For a coffee machine it wo
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see all but the pseudo events reach the event down to the next state on the state stack.</p>
+<p>As you can see all but the pseudo events reach the event down to the next state (the super-state) on the state stack.</p>
 </div>
 <div class="paragraph">
-<p>Then have an enum implement this interface and give it at least  a <code>NULL</code> value.</p>
+<p>Then have an enum implement this interface and give it at least  a <code>NULL</code> value,
+which is placed on the bottom of the stack, will never be removed and is there
+to catch any event not handled by any of the sub states.</p>
 </div>
 <div id="Mock-setup" class="listingblock">
 <div class="title">MyState enum template</div>
@@ -180,7 +184,7 @@ The maven generated site can be found at <a href="https://javabits.fontysvenlo.o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-01 09:05:11 CET
+Last updated 2018-09-21 12:06:53 CEST
 </div>
 </div>
 </body>

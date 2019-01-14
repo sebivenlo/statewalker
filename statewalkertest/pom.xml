@@ -5,14 +5,14 @@
     <parent>
         <groupId>nl.fontys.sebivenlo</groupId>
         <artifactId>statewalkerparent</artifactId>
-        <version>1.1</version>
-        <relativePath>..</relativePath>
+        <version>1.4</version>
+       <relativePath>..</relativePath>
     </parent>
 
     <name>SEBIVenlo :: StatewalkerTest</name>
     <groupId>nl.fontys.sebivenlo</groupId>
     <artifactId>statewalkertest</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
     <packaging>jar</packaging>
     <properties>
         <pitTargetClasses>nl.fontys.sebivenlo.**</pitTargetClasses>
@@ -21,19 +21,7 @@
         <dependency>
             <groupId>nl.fontys.sebivenlo</groupId>
             <artifactId>statewalker</artifactId>
-            <version>3.0</version>
+            <version>3.3</version>
         </dependency>
     </dependencies>
-<!--    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <detectLinks/>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>-->
 </project>

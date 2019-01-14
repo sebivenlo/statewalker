@@ -24,13 +24,14 @@ The source code and the separate statewalkertest project can be found on github 
 
 === Apply it to your project:
 
-To make it work in your project, you have to some work yourselves.
-. Implement a Context that extends BaseContext like this
-. Extend a State interface with default method handlers for ALL events (methods) relevant to your state machine.
-. Have a StateEnum implement this State interface. Since the interface has default methods only, a state only has to overwrite
-any method that is relevant to this state.
+To make it work in your project, you have to do some work yourselves.
+. Implement a Context that extends `BaseContext` like the code below.
+. Extend a `State` interface with default method handlers for ALL events (methods) relevant to your state machine.
+. Have a `StateEnum` implement this State interface. Since the interface has default methods only, a state only has to overwrite
+ any method that is relevant to this state.
 . You will also need a _Device_ that can be asked from the context and can be manipulated (as in: call methods on it) in the states.
-What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor.
+What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor, lights etc.
+
 === The Context
 [source,java]
 ----
@@ -53,9 +54,11 @@ class Context extends ContextBase<Context, Dev, State> {
 include::{sourcedir}/State.java[]
 ----
 
-As you can see all but the pseudo events reach the event down to the next state on the state stack.
+As you can see all but the pseudo events reach the event down to the next state (the super-state) on the state stack.
 
-Then have an enum implement this interface and give it at least  a `NULL` value.
+Then have an enum implement this interface and give it at least  a `NULL` value,
+which is placed on the bottom of the stack, will never be removed and is there
+to catch any event not handled by any of the sub states.
 
 .MyState enum template
 [[Mock-setup]]

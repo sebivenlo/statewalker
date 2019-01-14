@@ -24,7 +24,8 @@ package nl.fontys.sebivenlo.statewalker;
  * @param <D> Device
  * @param <S> StateBase
  */
-public interface StateBase<C extends ContextBase<C, D, S>, D extends Device<C, D, S>, S extends StateBase<C, D, S>> {
+public interface StateBase<C extends ContextBase<C, D, S>, 
+        D extends Device<C, D, S>, S extends StateBase<C, D, S>> {
 
     /**
      * This method is called whenever a state is entered.

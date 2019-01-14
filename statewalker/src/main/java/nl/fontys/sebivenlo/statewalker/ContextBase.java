@@ -13,7 +13,9 @@ import java.util.logging.Logger;
  * @param <D> Device for all operations
  * @param <S> State to maintain.
  */
-public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Device<C, D, S>, S extends StateBase<C, D, S>> {
+public abstract class ContextBase<C extends ContextBase<C, D, S>, 
+        D extends Device<C, D, S>, 
+        S extends StateBase<C, D, S>> {
 
     private final StateStack<S> stack = new StateStack<>( 6 );
     private final S nullState;
@@ -21,7 +23,10 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     private static final Logger LOGGER = Logger.getLogger( ContextBase.class.
             getName() );
     private final List<List<S>> deepHistoryMap;
-    private D device;
+    /**
+     * The device used/provided by this context.
+     */
+    protected D device;
 
     /**
      * Create a context for a state machine with states of type stateClass.
@@ -35,12 +40,12 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
             //this.initialMap = new ArrayList<>( enums.length );
             this.deepHistoryMap = new ArrayList<>( enums.length );
             for ( Object aEnum : enums ) {
-                S is = ( (S) aEnum ).getInitialState();
+                S is = ( ( S ) aEnum ).getInitialState();
                 List<S> iss = new ArrayList<>();
                 iss.add( is );
                 this.deepHistoryMap.add( iss );
             }
-            nullState = ( (S) enums[ 0 ] ).getNullState();
+            nullState = ( ( S ) enums[ 0 ] ).getNullState();
         } else {
             nullState = null;
             deepHistoryMap = null;
@@ -62,7 +67,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
                 this.enterState( initialState );
             }
         }
-        return (C) this;
+        return ( C ) this;
     }
 
     /**
@@ -123,7 +128,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      * @param s4 state to enter
      */
     public final void enterState( S s1, S s2, S s3, S s4 ) {
-        addStateInternal( s1,s2,s3,s4 );
+        addStateInternal( s1, s2, s3, s4 );
         doDeepHistory();
     }
 
@@ -137,7 +142,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      * @param s5 state to enter
      */
     public final void enterState( S s1, S s2, S s3, S s4, S s5 ) {
-        addStateInternal( s1 ,s2,s3,s4,s5);
+        addStateInternal( s1, s2, s3, s4, s5 );
         doDeepHistory();
     }
 
@@ -159,7 +164,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     @SafeVarargs
     @SuppressWarnings( "unchecked" )
     public final void enterState( S s1, S s2, S s3, S s4, S s5, S... extrastates ) {
-        addStateInternal( s1,s2,s3,s4,s5, extrastates );
+        addStateInternal( s1, s2, s3, s4, s5, extrastates );
         doDeepHistory();
     }
 
@@ -170,7 +175,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     final void addStateInternal( S childState ) {
         stack.push( childState );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
     }
 
     /**
@@ -181,9 +186,9 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     final void addStateInternal( S childState, S s2 ) {
         stack.push( childState );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s2 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
     }
 
     /**
@@ -194,11 +199,11 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     final void addStateInternal( S childState, S s2, S s3 ) {
         stack.push( childState );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s2 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s3 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
     }
 
     /**
@@ -209,13 +214,13 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     final void addStateInternal( S childState, S s2, S s3, S s4 ) {
         stack.push( childState );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s2 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s3 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s4 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
     }
 
     /**
@@ -226,15 +231,15 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
      */
     final void addStateInternal( S childState, S s2, S s3, S s4, S s5 ) {
         stack.push( childState );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s2 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s3 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s4 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s5 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
     }
 
     /**
@@ -246,18 +251,18 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     final void addStateInternal( S childState, S s2, S s3, S s4, S s5,
             S... extras ) {
         stack.push( childState );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s2 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s3 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s4 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         stack.push( s5 );
-        getTopState().enter( (C) this );
+        getTopState().enter( ( C ) this );
         for ( S extra : extras ) {
             stack.push( extra );
-            getTopState().enter( (C) this );
+            getTopState().enter( ( C ) this );
 
         }
     }
@@ -310,7 +315,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     @SuppressWarnings( "unchecked" )
     private void leaveAndPop() {
         stack.peek()
-                .exit( (C) this );
+                .exit( ( C ) this );
         stack.pop();
     }
 
@@ -460,7 +465,7 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     private void postLog( String ls, String event ) {
         if ( LOGGER.isLoggable( Level.FINE ) ) {
             LOGGER.log( Level.FINE, "from {0}, event [{1}] to {2}",
-                    new Object[]{ ls, event, logicalState() } );
+                    new Object[] { ls, event, logicalState() } );
         }
     }
 
@@ -635,18 +640,18 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>, D extends Devi
     @SuppressWarnings( "unchecked" )
     public C setDebug( boolean d ) {
         debug = d;
-        return (C) this;
+        return ( C ) this;
     }
 
     /**
      * Set the device for this context and return this context.
      *
-     * @param device to set
+     * @param aDevice to set
      * @return this context
      */
-    public C setDevice( D device ) {
-        this.device = device;
-        return (C) this;
+    public C setDevice( D aDevice ) {
+        this.device = aDevice;
+        return ( C ) this;
     }
 
 }
