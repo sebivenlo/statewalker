@@ -249,6 +249,7 @@
                 <version>3.0.1</version>
                 <configuration>
                     <additionalParam>-Xdoclint:none</additionalParam>
+                    <additionalParam>-html5</additionalParam>
                     <additionalOptions>--allow-script-in-comments</additionalOptions>
                     <resourcesArtifacts>
                         <resourceArtifact>
