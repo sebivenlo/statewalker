@@ -469,6 +469,7 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>
+                            <include>**/*.fxml</include>
                             <include>**/*.xml</include>
                             <include>**/*.png</include>
                             <include>**/*.svg</include>
