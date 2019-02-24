@@ -16,7 +16,7 @@
     </developers>
     <groupId>nl.fontys.sebivenlo</groupId>
     <artifactId>sebipom</artifactId>
-    <version>1.4</version>
+    <version>1.4.1</version>
     <packaging>pom</packaging>
 
     <name>SEBIVenlo :: SEBIPom</name>
@@ -94,7 +94,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>${mainClass}</mainClass>
+                            <mainClass>${exec.mainClass}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -118,7 +118,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>${mainClass}</mainClass>
+                            <mainClass>${exec.mainClass}</mainClass>
                         </manifest>
                     </archive>
                     <finalName>${assemblyName}</finalName>
@@ -382,9 +382,9 @@
                                     <goal>unpack-dependencies</goal>
                                 </goals>
                                 <configuration>
+                                <!-- Sebi pom only specifies test stuff by itselves.  -->
                                     <excludeScope>system</excludeScope>
-                                    <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
-                                    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
