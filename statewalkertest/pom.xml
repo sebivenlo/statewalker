@@ -5,7 +5,7 @@
     <parent>
         <groupId>nl.fontys.sebivenlo</groupId>
         <artifactId>statewalkerparent</artifactId>
-        <version>1.4</version>
+        <version>1.4.1</version>
        <relativePath>..</relativePath>
     </parent>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>nl.fontys.sebivenlo</groupId>
             <artifactId>statewalker</artifactId>
-            <version>3.3</version>
+            <version>3.4</version>
         </dependency>
     </dependencies>
 </project>
