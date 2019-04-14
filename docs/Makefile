@@ -6,3 +6,6 @@ all: index.html
 
 index.html: README.adoc css/asciidoctor.css src/*.java
 	asciidoctor -n -a linkcss -a stylesdir=css -a stylesheet=asciidoctor.css README.adoc -o index.html
+
+clean:
+	rm -f index.html
