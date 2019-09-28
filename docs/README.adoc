@@ -16,20 +16,28 @@ Version 1.0
 
 == StateWalker will simplify the coding of your (complex) state machines.
 
-Statewalker implements a hierarchical state pattern variant by using a stack of states.
-The child-most state is on top, it super state (if any) below it and so on.
-To change a state the code typically uses one method: `changeFromeToState(String message, State from, State... to)`.
+Statewalker implements a hierarchical state pattern variant by using a *stack* of states.
+It uses Java 8 features and works with Java 8 and up.
 
-The source code and the separate statewalkertest project can be found on github at the url https://github.com/sebivenlo/statewalker[https://github.com/sebivenlo/statewalker].
+An example of such a hierarchical state machine can be seen in the figure below <<StateDiagram>>.
+
+Stack wise, The child-most state is on top of aall, in particular it's super state (if any) below it and so on.
+To change a state the code typically uses one method: `changeFromToState(String message, State from, State... to)`.
+
+The source code and the separate `statewalkertest` project can be found on github at the url https://github.com/sebivenlo/statewalker[https://github.com/sebivenlo/statewalker].
 
 === Apply it to your project:
 
 To make it work in your project, you have to do some work yourselves.
+
 . Implement a Context that extends `BaseContext` like the code below.
 . Extend a `State` interface with default method handlers for ALL events (methods) relevant to your state machine.
 . Have a `StateEnum` implement this State interface. Since the interface has default methods only, a state only has to overwrite
  any method that is relevant to this state.
-. You will also need a _Device_ that can be asked from the context and can be manipulated (as in: call methods on it) in the states.
+. You will also need a _Device_ that can be asked from the context and can be manipulated (as in: call methods on it) in the states. One or more devices
+ are typically the reason to have a state machine in the first place. the *Device* is the combination of all things that can be turned on and off and serve
+ a common goal, such as brewing coffee at 6:00 in the morning.
+
 What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor, lights etc.
 
 === The Context
@@ -48,17 +56,26 @@ class Context extends ContextBase<Context, Dev, State> {
 ----
 
 === State interface
+
+The major part of the concept is using default methods, provided since Java 8. Abstract (or non-abstract) would
+also work, but
+
+* you can only extend one class, so it would limit your design options and
+* you cannot have an `enum` extend a class, only `implement` interfaces.
+
+
 .statewalkertest State interface
 [source,java]
 ----
 include::{sourcedir}/State.java[]
 ----
 
-As you can see all but the pseudo events reach the event down to the next state (the super-state) on the state stack.
+As you can see all but the pseudo events reach the event (i.e. method call) down to the next state (the super-state) on the state stack.
 
 Then have an enum implement this interface and give it at least  a `NULL` value,
 which is placed on the bottom of the stack, will never be removed and is there
-to catch any event not handled by any of the sub states.
+to catch any event not handled by any of the sub states. This NULL is then the catch all  implementation that does nothing.
+You could have NULL log received events, but not have it reaching down any.
 
 .MyState enum template
 [[Mock-setup]]
@@ -81,8 +98,9 @@ public class Dev implements Device<Context, Dev, State> {
 
 For an example see the maven project statewalkertest in the repository, which implements the state bahavior in the <<StateDiagram>> below:
 
+[[teststatemachine]]
 .Test state machine
-[[StateMachine]]
+[[StateDiagram]]
 image:images/statewalkertest.svg[State Walker test state machine].
 
 The Java statewalker API doc is also available at link:https://javabits.fontysvenlo.org/statewalker/apidocs/index.html[API Docs].

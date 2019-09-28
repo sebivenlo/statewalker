@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.7.1">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>SeBi Venlo State Walker</title>
 <link rel="stylesheet" href="css/asciidoctor.css">
 </head>
@@ -25,23 +25,45 @@ Version 1.0</p>
 <h2 id="_statewalker_will_simplify_the_coding_of_your_complex_state_machines"><a class="link" href="#_statewalker_will_simplify_the_coding_of_your_complex_state_machines">StateWalker will simplify the coding of your (complex) state machines.</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Statewalker implements a hierarchical state pattern variant by using a stack of states.
-The child-most state is on top, it super state (if any) below it and so on.
-To change a state the code typically uses one method: <code>changeFromeToState(String message, State from, State&#8230;&#8203; to)</code>.</p>
+<p>Statewalker implements a hierarchical state pattern variant by using a <strong>stack</strong> of states.
+It uses Java 8 features and works with Java 8 and up.</p>
 </div>
 <div class="paragraph">
-<p>The source code and the separate statewalkertest project can be found on github at the url <a href="https://github.com/sebivenlo/statewalker">https://github.com/sebivenlo/statewalker</a>.</p>
+<p>An example of such a hierarchical state machine can be seen in the figure below <a href="#StateDiagram">Test state machine</a>.</p>
+</div>
+<div class="paragraph">
+<p>Stack wise, The child-most state is on top of aall, in particular it&#8217;s super state (if any) below it and so on.
+To change a state the code typically uses one method: <code>changeFromToState(String message, State from, State&#8230;&#8203; to)</code>.</p>
+</div>
+<div class="paragraph">
+<p>The source code and the separate <code>statewalkertest</code> project can be found on github at the url <a href="https://github.com/sebivenlo/statewalker">https://github.com/sebivenlo/statewalker</a>.</p>
 </div>
 <div class="sect2">
 <h3 id="_apply_it_to_your_project"><a class="link" href="#_apply_it_to_your_project">Apply it to your project:</a></h3>
 <div class="paragraph">
-<p>To make it work in your project, you have to do some work yourselves.
-. Implement a Context that extends <code>BaseContext</code> like the code below.
-. Extend a <code>State</code> interface with default method handlers for ALL events (methods) relevant to your state machine.
-. Have a <code>StateEnum</code> implement this State interface. Since the interface has default methods only, a state only has to overwrite
- any method that is relevant to this state.
-. You will also need a <em>Device</em> that can be asked from the context and can be manipulated (as in: call methods on it) in the states.
-What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor, lights etc.</p>
+<p>To make it work in your project, you have to do some work yourselves.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Implement a Context that extends <code>BaseContext</code> like the code below.</p>
+</li>
+<li>
+<p>Extend a <code>State</code> interface with default method handlers for ALL events (methods) relevant to your state machine.</p>
+</li>
+<li>
+<p>Have a <code>StateEnum</code> implement this State interface. Since the interface has default methods only, a state only has to overwrite
+any method that is relevant to this state.</p>
+</li>
+<li>
+<p>You will also need a <em>Device</em> that can be asked from the context and can be manipulated (as in: call methods on it) in the states. One or more devices
+are typically the reason to have a state machine in the first place. the <strong>Device</strong> is the combination of all things that can be turned on and off and serve
+a common goal, such as brewing coffee at 6:00 in the morning.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>What the 'device' is and what it can do is up to you. For a coffee machine it would be the boiler and the lights. For an elevator the door motor and elevator motor, lights etc.</p>
 </div>
 </div>
 <div class="sect2">
@@ -63,6 +85,20 @@ What the 'device' is and what it can do is up to you. For a coffee machine it wo
 </div>
 <div class="sect2">
 <h3 id="_state_interface"><a class="link" href="#_state_interface">State interface</a></h3>
+<div class="paragraph">
+<p>The major part of the concept is using default methods, provided since Java 8. Abstract (or non-abstract) would
+also work, but</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>you can only extend one class, so it would limit your design options and</p>
+</li>
+<li>
+<p>you cannot have an <code>enum</code> extend a class, only <code>implement</code> interfaces.</p>
+</li>
+</ul>
+</div>
 <div class="listingblock">
 <div class="title">statewalkertest State interface</div>
 <div class="content">
@@ -72,19 +108,19 @@ What the 'device' is and what it can do is up to you. For a coffee machine it wo
 
 <span class="comment">/**
  *
- * @author Pieter van den Hombergh {@code &lt;p.vandenhombergh@fontys.nl&gt;}
+ * @author Pieter van den Hombergh {@code &lt;pieter.van.den.hombergh@gmail.com&gt;}
  */</span>
 <span class="directive">public</span> <span class="type">interface</span> <span class="class">State</span> <span class="directive">extends</span> StateBase&lt;<span class="predefined-type">Context</span>, Dev, State&gt; {
     <span class="comment">// &lt;editor-fold formatter-rule=&quot;keep-off&quot;&gt;</span>
-    <span class="keyword">default</span> <span class="type">void</span>  e1( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e1( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e2( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e2( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e3( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e3( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e4( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e4( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e5( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e5( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e6( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e6( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e7( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e7( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e8( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e8( ctx ); }
-    <span class="keyword">default</span> <span class="type">void</span>  e9( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e9( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e1( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e1( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e2( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e2( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e3( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e3( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e4( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e4( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e5( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e5( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e6( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e6( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e7( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e7( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e8( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e8( ctx ); }
+    <span class="keyword">default</span> <span class="type">void</span>  e9( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ). e9( ctx ); }
     <span class="keyword">default</span> <span class="type">void</span> e10( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e10( ctx ); }
     <span class="keyword">default</span> <span class="type">void</span> e11( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e11( ctx ); }
     <span class="keyword">default</span> <span class="type">void</span> e12( <span class="predefined-type">Context</span> ctx ) { ctx.superState( <span class="local-variable">this</span> ).e12( ctx ); }
@@ -100,12 +136,13 @@ What the 'device' is and what it can do is up to you. For a coffee machine it wo
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see all but the pseudo events reach the event down to the next state (the super-state) on the state stack.</p>
+<p>As you can see all but the pseudo events reach the event (i.e. method call) down to the next state (the super-state) on the state stack.</p>
 </div>
 <div class="paragraph">
 <p>Then have an enum implement this interface and give it at least  a <code>NULL</code> value,
 which is placed on the bottom of the stack, will never be removed and is there
-to catch any event not handled by any of the sub states.</p>
+to catch any event not handled by any of the sub states. This NULL is then the catch all  implementation that does nothing.
+You could have NULL log received events, but not have it reaching down any.</p>
 </div>
 <div id="Mock-setup" class="listingblock">
 <div class="title">MyState enum template</div>
@@ -168,9 +205,9 @@ to catch any event not handled by any of the sub states.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>For an example see the maven project statewalkertest in the repository, which implements the state bahavior in the <a href="#StateDiagram">[StateDiagram]</a> below:</p>
+<p>For an example see the maven project statewalkertest in the repository, which implements the state bahavior in the <a href="#StateDiagram">Test state machine</a> below:</p>
 </div>
-<div id="StateMachine" class="paragraph">
+<div id="StateDiagram" class="paragraph">
 <div class="title">Test state machine</div>
 <p><span class="image"><img src="images/statewalkertest.svg" alt="State Walker test state machine"></span>.</p>
 </div>
@@ -184,7 +221,7 @@ The maven generated site can be found at <a href="https://javabits.fontysvenlo.o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-09-21 12:06:53 CEST
+Last updated 2019-04-14 07:42:41 CEST
 </div>
 </div>
 </body>
