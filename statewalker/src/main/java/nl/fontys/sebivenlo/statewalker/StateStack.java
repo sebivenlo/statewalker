@@ -69,19 +69,21 @@ class StateStack<E> implements Stack<E> {
     }
 
     /**
-     * Peek one below top, if any.
+     * Peek below top, and return state, if any.
      *
-     * @param level to peek below top.
+     * @param levelsDown to peek below top.
      */
-    public E peekDownFrom(E reference, int level) {
+    public E peekDownFrom(E reference, int levelsDown) {
         int t = top;
+        // find reference state.
         while (!storage[t].equals(reference) && 0 < t) {
             t--;
         }
-        if (t < level) {
+        if (t < levelsDown) {
             return null;
         }
-        int k = t - level;
+        // t <= top, k >=0
+        int k = t - levelsDown;
         if (k < 0 || k >= storage.length) {
             return null;
         } else {

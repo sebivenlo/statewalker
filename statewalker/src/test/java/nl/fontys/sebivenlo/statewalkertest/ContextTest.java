@@ -1,7 +1,8 @@
 package nl.fontys.sebivenlo.statewalkertest;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
 
 /**
  * For coverage.
@@ -15,7 +16,7 @@ public class ContextTest {
     @Test
     public void testGetDevice() {
         Context ctx= new Context(S.class);
-        assertNotNull( "has device", ctx.getDevice());
+        assertThat(ctx.getDevice()).as("has device").isNotNull();
     }
     
 }

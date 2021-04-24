@@ -2,10 +2,10 @@ package nl.fontys.sebivenlo.statewalker;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 import static nl.fontys.sebivenlo.statewalker.ContextBaseTest.SB.*;
 import nl.fontys.sebivenlo.statewalkertest.MyHandler;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -70,8 +70,8 @@ public class ContextBaseTest {
     public void testSomeMethod() {
         cb.initialize();
         cb2.initialize();
-        assertSame( dev, cb.getDevice() );
-        assertNotSame( dev, cb2.getDevice() );
+        assertThat( cb.getDevice() ).isSameAs( dev );
+        assertThat( cb2.getDevice() ).isNotSameAs( dev );
     }
 
     // Just for coverage
@@ -87,7 +87,7 @@ public class ContextBaseTest {
     @Test
     public void testRawContext() {
         CTXNoEnum ctxNoEnum = new CTXNoEnum();
-        assertNotNull( ctxNoEnum );
+        assertThat( ctxNoEnum ).isNotNull();
     }
 
     @Test
@@ -96,10 +96,10 @@ public class ContextBaseTest {
         exited = false;
         cb.initialize();
         cb.addStateInternal( SB2 );
-        assertTrue( " did not enter", entered );
+        assertThat( entered ).as( " did not enter" ).isTrue();
         cb.leaveState( SB2 );
-        assertTrue( exited );
-        assertTrue( " did not exit", exited );
+        assertThat( exited ).isTrue();
+        assertThat( exited ).as( " did not exit" ).isTrue();
     }
 
     @Test
@@ -113,17 +113,19 @@ public class ContextBaseTest {
         cb.addStateInternal( SB1 );
         mh.flush();
         cb.changeFromToState( "try", SB1, SB2, SB3 );
-        assertTrue( "wrong message " + mh.lastMessage, mh.lastMessage.contains(
-                "from" ) );
-        assertTrue( "wrong message " + mh.lastMessage, mh.lastMessage.contains(
-                "event" ) );
+        assertThat( mh.lastMessage )
+                .as( "wrong message " )
+                .contains( "from" );
+        assertThat( mh.lastMessage )
+                .as( "wrong message " )
+                .contains( "event" );
 
-        assertTrue( "wrong state ", mh.lastParams.contains( "SB1" ) );
-        assertTrue( "wrong state ", mh.lastParams.contains( "SB2.SB3" ) );
+        assertThat(  mh.lastParams).as("wrong state ").contains( "SB1" );
+        assertThat(  mh.lastParams).as("wrong state ").contains( "SB2.SB3" );
         mh.flush();
         cb.changeFromToState( "try", SB2, SB1 );
 
-        assertTrue( "wrong state ", mh.lastParams.contains( "SB2.SB3" ) );
-        assertTrue( "wrong state ", mh.lastParams.contains( "SB1" ) );
+        assertThat( mh.lastParams).contains( "SB2.SB3" );
+        assertThat( mh.lastParams).contains( "SB1" );
     }
 }

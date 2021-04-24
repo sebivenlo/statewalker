@@ -17,7 +17,7 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>Pieter van den Hombergh (homberghp) &lt;<a href="mailto:p.vandenhombergh@fontys.nl">p.vandenhombergh@fontys.nl</a>&gt;
-Version 1.0</p>
+Version 1.1</p>
 </div>
 </div>
 </div>
@@ -29,10 +29,25 @@ Version 1.0</p>
 It uses Java 8 features and works with Java 8 and up.</p>
 </div>
 <div class="paragraph">
+<p>Statewalker is also about testable design, in particular testing stateful behaviour. Using Mockito to mock Context and Device
+will let you set up your tests very easily and achieve full coverage of the state behaviour implementation in the state enum.</p>
+</div>
+<div class="paragraph">
+<p>The class diagram below shows the typical usage of statewalker, with its three main parts, <strong>ContextBase</strong>, <strong>Device</strong>, and <strong>StateBase</strong>.</p>
+</div>
+<div id="classdiagram" class="paragraph">
+<div class="title">class diagram</div>
+<p><span class="image"><img src="images/statewalker.svg" alt="Class diagram."></span></p>
+</div>
+<div class="paragraph">
+<p>Note that the design uses <em>generics</em> in a way that involves all three, <code>&lt;C,D,S&gt;</code> for *C*ontext, *D*evice, and *S*tate.
+It makes the design a bit harder to realise but usage bothy type safe and simpler.</p>
+</div>
+<div class="paragraph">
 <p>An example of such a hierarchical state machine can be seen in the figure below <a href="#StateDiagram">Test state machine</a>.</p>
 </div>
 <div class="paragraph">
-<p>Stack wise, The child-most state is on top of aall, in particular it&#8217;s super state (if any) below it and so on.
+<p>Stack wise, The child-most state is on top of all, in particular it&#8217;s super state (if any) below it and so on.
 To change a state the code typically uses one method: <code>changeFromToState(String message, State from, State&#8230;&#8203; to)</code>.</p>
 </div>
 <div class="paragraph">
@@ -221,7 +236,7 @@ The maven generated site can be found at <a href="https://javabits.fontysvenlo.o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-14 07:42:41 CEST
+Last updated 2019-07-24 20:03:34 CEST
 </div>
 </div>
 </body>

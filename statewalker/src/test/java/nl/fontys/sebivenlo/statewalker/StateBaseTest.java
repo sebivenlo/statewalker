@@ -1,7 +1,7 @@
 package nl.fontys.sebivenlo.statewalker;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -47,9 +47,9 @@ public class StateBaseTest {
      */
     @Test
     public void coverageComplete() {
-        assertNull( sb.getInitialState() );
-        assertFalse( sb.isInitialStateHistory() );
-        assertFalse( sb.isInitialStateDeepHistory() );
+        assertThat(sb.getInitialState() ).isNull();
+        assertThat(sb.isInitialStateHistory() ).isFalse();
+        assertThat(sb.isInitialStateDeepHistory() ).isFalse();
         sb.enter( cb );
         sb.exit( cb );
     }

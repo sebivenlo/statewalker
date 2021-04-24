@@ -1,7 +1,7 @@
 = SeBi Venlo State Walker
 
 Pieter van den Hombergh (homberghp) <p.vandenhombergh@fontys.nl>
-Version 1.0
+Version 1.1
 
 :stylesdir: css/
 :stylesheet: asciidoctor.css
@@ -19,9 +19,21 @@ Version 1.0
 Statewalker implements a hierarchical state pattern variant by using a *stack* of states.
 It uses Java 8 features and works with Java 8 and up.
 
+Statewalker is also about testable design, in particular testing stateful behaviour. Using Mockito to mock Context and Device
+will let you set up your tests very easily and achieve full coverage of the state behaviour implementation in the state enum.
+
+The class diagram below shows the typical usage of statewalker, with its three main parts, *ContextBase*, *Device*, and *StateBase*.
+
+[[classdiagram]]
+.class diagram
+image:images/statewalker.svg[Class diagram.]
+
+Note that the design uses _generics_ in a way that involves all three, `<C,D,S>` for Context, Device, and State.
+It makes the design a bit harder to realise but usage bothy type safe and simpler.
+
 An example of such a hierarchical state machine can be seen in the figure below <<StateDiagram>>.
 
-Stack wise, The child-most state is on top of aall, in particular it's super state (if any) below it and so on.
+Stack wise, The child-most state is on top of all, in particular it's super state (if any) below it and so on.
 To change a state the code typically uses one method: `changeFromToState(String message, State from, State... to)`.
 
 The source code and the separate `statewalkertest` project can be found on github at the url https://github.com/sebivenlo/statewalker[https://github.com/sebivenlo/statewalker].

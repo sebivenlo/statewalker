@@ -5,16 +5,20 @@
     <parent>
         <groupId>nl.fontys.sebivenlo</groupId>
         <artifactId>sebipom</artifactId>
-        <version>1.4.4</version>
-        <relativePath>../sebipom</relativePath>
+        <version>3.0.2</version>
+        <relativePath/>
     </parent>
     <groupId>nl.fontys.sebivenlo</groupId>
     <artifactId>statewalker</artifactId>
-    <version>3.4</version>
+    <version>3.4.1</version>
     <packaging>jar</packaging>
     <name>SEBIVenlo :: Statewalker</name>
     <properties>
         <pitTargetClasses>nl.fontys.sebivenlo.**</pitTargetClasses>
         <settings.localRepository>/home/hom/.m2/repository</settings.localRepository>
+        <surefire.opens>
+            --add-opens nl.fontys.sebivenlo.statewalker/nl.fontys.sebivenlo.statewalkerpile=ALL-UNNAMED
+            --add-opens nl.fontys.sebivenlo.statewalker/nl.fontys.sebivenlo.statewalkerinnerpile=ALL-UNNAMED
+        </surefire.opens>
     </properties>
 </project>

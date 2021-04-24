@@ -3,11 +3,9 @@ package nl.fontys.sebivenlo.statewalker;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base class for stack tests. The extending classes should provide the factory
@@ -23,15 +21,14 @@ public abstract class StackTestBase {
     @Test
     public void an_new_stack_is_empty() {
         Stack<String> s = createInstance();
-        assertTrue( "Fresh stack is empty", s
-                .isEmpty() );
+        assertThat( s.isEmpty() ).as( "Fresh stack is empty" ).isTrue();
     }
 
     @Test
     public void stack_with_one_element_is_not_empty() {
         Stack<String> s = createInstance();
         s.push( "Hi" );
-        assertFalse( "Hi on stack", s.isEmpty() );
+        assertThat( s.isEmpty() ).as( "Hi on stack" ).isFalse();
     }
 
     @Test
@@ -39,8 +36,7 @@ public abstract class StackTestBase {
         Stack<String> s = createInstance();
         String h = "Hi";
         s.push( h );
-        assertSame( "Hi on stack, same", h, s
-                .peek() );
+        assertThat( s.peek() ).isSameAs( h );
     }
 
     @Test
@@ -48,9 +44,8 @@ public abstract class StackTestBase {
         Stack<String> s = createInstance();
         String h = "Hi";
         s.push( h );
-        assertSame( "Hi on stack, same", h, s
-                .pop() );
-        assertTrue( "empty?", s.isEmpty() );
+        assertThat( s.pop() ).isSameAs( h );
+        assertThat( s.isEmpty() ).isTrue();
 
     }
 
@@ -77,8 +72,7 @@ public abstract class StackTestBase {
         received = l.toArray( received );
         System.out.println( "received = " + Arrays
                 .deepToString( received ) );
-        assertArrayEquals( "order check ", testData,
-                received );
+        assertThat( received ).isEqualTo( testData );
     }
 
     /**
@@ -89,9 +83,11 @@ public abstract class StackTestBase {
      * Quiz: explain how the actual throwing in this method is used in the
      * subclasses and how it can work.
      */
-    @Test( expected = RuntimeException.class )
+    @Test
     public void empty_peek_should_bark() {
         Stack<String> s = createInstance();
-        s.peek(); // should throw exception
+        assertThatThrownBy( () -> {
+            s.peek(); // should throw exception
+        } ).isInstanceOf( RuntimeException.class );
     }
 }
