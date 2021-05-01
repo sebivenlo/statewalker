@@ -20,5 +20,6 @@
             --add-opens nl.fontys.sebivenlo.statewalker/nl.fontys.sebivenlo.statewalkerpile=ALL-UNNAMED
             --add-opens nl.fontys.sebivenlo.statewalker/nl.fontys.sebivenlo.statewalkerinnerpile=ALL-UNNAMED
         </surefire.opens>
+        <publish-url>fontysvenlo.org/home/javabits/public_html/</publish-url>
     </properties>
 </project>

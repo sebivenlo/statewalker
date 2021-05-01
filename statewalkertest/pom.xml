@@ -4,9 +4,9 @@
     <url>https://javabits.fontysvenlo.org/statewalkertest</url>
     <parent>
         <groupId>nl.fontys.sebivenlo</groupId>
-        <artifactId>statewalkerparent</artifactId>
-        <version>1.4.1</version>
-       <relativePath>..</relativePath>
+        <artifactId>sebipom</artifactId>
+        <version>1.4.8</version>
+        <relativePath/>
     </parent>
 
     <name>SEBIVenlo :: StatewalkerTest</name>
@@ -16,6 +16,7 @@
     <packaging>jar</packaging>
     <properties>
         <pitTargetClasses>nl.fontys.sebivenlo.**</pitTargetClasses>
+        <publish-url>fontysvenlo.org/home/javabits/public_html/</publish-url>
     </properties>
     <dependencies>
         <dependency>

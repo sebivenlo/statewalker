@@ -654,4 +654,8 @@ public abstract class ContextBase<C extends ContextBase<C, D, S>,
         return ( C ) this;
     }
 
+    public static Logger getLOGGER() {
+        return LOGGER;
+    }
+    
 }
