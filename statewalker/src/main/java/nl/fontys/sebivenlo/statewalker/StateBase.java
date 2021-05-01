@@ -1,5 +1,8 @@
 package nl.fontys.sebivenlo.statewalker;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Methods that should be available in all states to make the state walker api
  * work.
@@ -26,13 +29,17 @@ package nl.fontys.sebivenlo.statewalker;
  */
 public interface StateBase<C extends ContextBase<C, D, S>, 
         D extends Device<C, D, S>, S extends StateBase<C, D, S>> {
-
+    
+    private static Logger logger(){
+        return Logger.getLogger( StateBase.class.getName());
+    }
     /**
      * This method is called whenever a state is entered.
      *
      * @param ctx the context for all operations.
      */
     default void enter( C ctx ) {
+        logger().log(Level.FINEST, "enter state {0}", this);
     }
 
     /**
@@ -41,6 +48,7 @@ public interface StateBase<C extends ContextBase<C, D, S>,
      * @param ctx the context for all operations.
      */
     default void exit( C ctx ) {
+        logger().log(Level.FINEST, "exit state {0}", this);
     }
 
     /**
